@@ -16,40 +16,142 @@
             <a href="#">Projects</a>
             <a href="#">Blog</a>
             <a href="#">Youtube</a>
-            <a href="#">About</a>
         </div>
 
-        <a href="https://github.com/YusufA0906"><i class="ri-github-fill"></i> My Projects</a>
+        <a href="https://github.com/YusufA0906"><i class="ri-github-fill"></i> Github</a>
 
 </nav>
 
-    <section class="hero">
+<section id="profile">
+    <div class="section__pic-container">
+        <img src="{% static 'assets/profile.png' %}" alt="Yusuf Ali profile picture" class="profile-pic" />
+    </div>
+    <div class="section__text">
+        <p class="section__text__p1">Hello, I'm</p>
+        <h1 class="title">Yusuf Ali</h1>
+        <p class="section__text__p2">Operations & Financial Technologist</p>
+        
+        <div class="btn-container">
+            <button class="btn btn--secondary" onclick="location.href='#'">
+                Work With Me
+            </button>
+            <button class="btn" onclick="location.href='https://github.com/YusufA0906'">
+                <i class="ri-github-fill"></i> My Github
+            </button>
+        </div>
+        
+        <div id="socials-container">
+            <i class="ri-youtube-line icon" onclick="location.href='#'"></i>
+            <i class="ri-linkedin-box-line icon" onclick="location.href='#'"></i>
+        </div>
+    </div>
+</section>
 
-        <div class="hero__content">
-            <img src="{% static 'assets/profile.png' %}" alt="Profile Image" class="hero__image">
-            <h2>Hello! I'm Yusuf Ali</h2>
+<section id="about" class="about-section">
+    <p class="section__text__p1">Get To Know More</p>
+    <h1 class="title">About Me</h1>
 
-            <div class="bottom">
-                <p>Other Socials:</p>
-                <div class="icons">
-                    <i class="ri-youtube-line"></i>
-                    <i class="ri-twitter-x-line"></i>
-                    <i class="ri-linkedin-box-line"></i>
+    <div class="section-container">
+        <div class="section__pic-container-about">
+            <img src="{% static 'assets/profile.png' %}" alt="Yusuf Ali profile picture" class="about-pic" />
+        </div>
+        <div class="about-details-container">
+            <div class="about-containers">
+                <div class="details-container">
+                    <i class="ri-medal-line icon"></i>
+                    <h3>Focus</h3>
+                    <p>Python Automation <br />& IT Infrastructure</p>
+                </div>
+                <div class="details-container">
+                    <i class="ri-graduation-cap-line icon"></i>
+                    <h3>Education</h3>
+                    <p>B.Sc. in Computer Science<br />Sheridan College (In Progress)</p>
                 </div>
             </div>
-
-        </div>
-
-        <div class="hero__intro">
-            <h3>Operations & Financial Technologist Based in Canada</h3>
-            <p>Crafting secure IT infrastructure, automating back-office workflows with Python, and keeping your Canadian tax and bookkeeping seamlessly compliant.</p>
-            <div class="hero__actions">
-                <button class="btn">Work With Me</button>
-                <a href="https://github.com/YusufA0906" class="btn btn--secondary"><i class="ri-github-fill"></i> My Github</a>
+            <div class="text-container">
+                <p>
+                    I am a proactive and detail-oriented Operations & Financial Technologist. I specialize in bridging the gap between complex IT infrastructure and financial compliance. By automating back-office workflows with Python and managing cloud ecosystems, I design secure financial structures so you can focus on growing your business with complete peace of mind.
+                </p>
             </div>
         </div>
+    </div>
 
-    </section>
+</section>
+
+<section id="experience" class="experience-section">
+    <p class="section__text__p1">Explore My</p>
+    <h1 class="title">Experience</h1>
+    <div class="experience-details-container">
+        <div class="about-containers">
+            <div class="details-container">
+                <h2 class="experience-sub-title">IT & Automation</h2>
+                <div class="article-container">
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>Python</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>Scripting</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>Hardware</h3>
+                            <p>Intermediate</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>APIs</h3>
+                            <p>Basic</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="details-container">
+                <h2 class="experience-sub-title">Finance & Tax</h2>
+                <div class="article-container">
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>QuickBooks</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>CRA Rules</h3>
+                            <p>Experienced</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>Payroll</h3>
+                            <p>Intermediate</p>
+                        </div>
+                    </article>
+                    <article>
+                        <i class="ri-checkbox-circle-fill icon"></i>
+                        <div>
+                            <h3>Ledgers</h3>
+                            <p>Intermediate</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <section class="skills">
 
@@ -57,11 +159,6 @@
             <h3>Experienced Across Multiple Projects and Technologies</h3>
             <p>Bringing creativity and technical proficiency to building responsive web applications and enhancing user
                 experiences.</p>
-
-            <div class="skills__actions">
-                <button class="btn">Work With Me</button>
-                <button class="btn btn--secondary">Send Email</button>
-            </div>
         </div>
 
         <div class="skills__stats">
@@ -295,28 +392,26 @@
                     </div>
                 </div>
 
-                <a href="#"><i class="ri-external-link-line"></i></a>
             </div>
 
             <div class="award">
 
                 <div>
-                    <i class="ri-javascript-line"></i>
+                    <i class="ri-medal-fill"></i>
                     <div class="award__info">
                         <h5>Intuit QuickBooks Certification Level 1</h5>
                         <p>July 2026</p>
                     </div>
                 </div>
 
-                <a href="#"><i class="ri-external-link-line"></i></a>
             </div>
 
             <div class="award">
 
                 <div>
-                    <i class="ri-javascript-line"></i>
+                    <i class="ri-medal-fill"></i>
                     <div class="award__info">
-                        <h5>Intuit QuickBooks Certification Level 1</h5>
+                        <h5>Placeholder</h5>
                         <p>July 2026</p>
                     </div>
                 </div>
@@ -331,19 +426,20 @@
     <section class="contact">
        <h2>Let's Work Together!</h2>
     
-    <div class="items">
-        <div class="item">
-            <a href="mailto:yusuf_ali0906@hotmail.com">Inquiries & Consulting</a>
-            <p>Drop a line to discuss workflow automation or financial accounting integrations.</p>
-            <a href="mailto:yusuf_ali0906@hotmail.com" class="btn">Send Email</a>
+        <div class="items">
+            <div class="item">
+                <a href="mailto:yusuf_ali0906@hotmail.com">Inquiries & Consulting</a>
+                <p>Drop a line to discuss workflow automation or financial accounting integrations.</p>
+                <a href="mailto:yusuf_ali0906@hotmail.com" class="btn btn--secondary">Send Email</a>
+            </div>
+
+            <div class="item">
+                <a href="tel:+16474060209">Direct Phone Line</a>
+                <p>Speak live to review server security parameters or Canadian tax frameworks.</p>
+                <button class="btn btn--secondary">Call Now</button>
+            </div>
         </div>
-        
-        <div class="item">
-            <a href="tel:+16474060209">Direct Phone Line</a>
-            <p>Speak live to review server security parameters or Canadian tax frameworks.</p>
-            <button class="btn btn--secondary">Call Now</button>
-        </div>
-    </div>
+
     </section>
 
     <footer class="footer">

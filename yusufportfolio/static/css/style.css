@@ -142,74 +142,211 @@ nav button i {
 }
 
 
-.hero{
-    position: relative;
+#profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    height: calc(100vh - 75px);
+    padding-top: 100px; 
+}
+
+.section__pic-container {
+    display: flex;
+    height: 400px;
+    width: 400px;
+    margin: auto 0;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.section__text {
+    align-self: center;
+    text-align: center;
+}
+
+.section__text p {
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.section__text__p1 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.section__text__p2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 3rem;
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Widens the buttons specifically for this section to match the John Doe style */
+#profile .btn {
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 100px 60px;
-    gap: 60px;
-    height: calc(100vh - 75px);
+    gap: 5px;
 }
 
-.hero__content,
-.hero__intro{
-    width: 50%;
+#socials-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
 }
 
-.hero__image{
-    width: 340px;
-    height: 340px;
-    border-radius: 10px;
+#socials-container .icon {
+    cursor: pointer;
+    font-size: 2rem;
+    color: #1f2937;
+    transition: all 0.3s ease;
 }
 
-.hero__content h2{
-    font-size: 48px;
-    line-height: 60px;
-    font-weight: 400;
-    margin-top: 20px;
-    width: 85%;
-}
-
-.hero__intro{
-    padding-right: 40px;
-}
-
-.hero__intro h3{
-    font-weight: 500;
-    font-size: 40px;
-    line-height: 50px;
-    margin-bottom: 10px;
-}
-
-.hero__intro p{
+#socials-container .icon:hover {
     color: #6b7280;
-    font-weight: 500;
-    margin-bottom: 30px;
 }
 
-.hero__actions,
+
+.about-section, 
+.experience-section {
+    padding: 60px;
+    background: #fff;
+}
+
+.section-container {
+    display: flex;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: center;
+}
+
+.section__pic-container-about {
+    height: 400px;
+    width: 400px;
+    flex-shrink: 0;
+}
+
+.about-pic {
+    border-radius: 2rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+}
+
+.about-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-containers {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.details-container {
+    padding: 1.5rem;
+    flex: 1;
+    background: white;
+    border-radius: 2rem;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.details-container .icon {
+    font-size: 2rem;
+    color: #1f2937;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.text-container p {
+    color: #6b7280;
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* EXPERIENCE SPECIFIC */
+.experience-details-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+
+.experience-sub-title {
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+}
+
+.article-container {
+    display: flex;
+    text-align: left;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2.5rem;
+    justify-content: space-around;
+}
+
+article {
+    display: flex;
+    width: 10rem;
+    gap: 0.5rem;
+}
+
+article .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    color: #1f2937;
+}
+
+article h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+article p {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+
 .skills__actions{
     display: flex;
     gap: 10px;
 }
 
-.hero__actions .btn,
 .skills__actions .btn{
     padding: 6px 20px;
     font-size: 12px;
     font-weight: 500;
 }
 
-.hero .bottom .icons{
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    width: fit-content;
-}
 
 .skills{
     padding: 60px;
@@ -572,21 +709,13 @@ nav button i {
 
 @media screen and (max-width: 1230px) {
     
-    .hero__image{
-        width: 100%;
+    #profile {
+        gap: 2rem;
     }
-
-    .hero__content h2{
-        font-size: 38px;
-        text-align: center;
-    }
-
-    .hero__intro h3{
-        font-size: 30px;
-    }
-
-    .hero__intro p{
-        font-size: 15px;
+    
+    .section__pic-container {
+        height: 300px;
+        width: 300px;
     }
 
     .skills__desc{
@@ -626,6 +755,15 @@ nav button i {
         width: 48%;
     }
 
+    .section-container {
+        gap: 2rem;
+    }
+    
+    .section__pic-container-about {
+        height: 300px;
+        width: 300px;
+    }
+
 }
 
 @media screen and (max-width: 992px) {
@@ -650,6 +788,20 @@ nav button i {
     .skills{
         flex-direction: column;
         padding: 60px 30px 80px;
+    }
+
+    .about-section, 
+    .experience-section {
+        padding: 60px 30px;
+    }
+
+    .section-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .text-container p {
+        text-align: center;
     }
 
     .skills__desc,
@@ -703,28 +855,42 @@ nav button i {
         display: none;
     }
 
-    .hero{
+    #profile {
         flex-direction: column;
         height: auto;
-        padding: 40px 30px 0px;
-        gap: 30px;
+        padding: 120px 30px 40px;
+        gap: 2rem;
+    }
+    
+    .section__pic-container {
+        height: 250px;
+        width: 250px;
+        margin: 0 auto;
+    }
+    
+    .title {
+        font-size: 2.5rem;
     }
 
-    .hero__content,
-    .hero__intro{
+    .about-containers {
+        flex-direction: column;
+    }
+    
+    .section__pic-container-about {
         width: 100%;
+        height: auto;
     }
-
-    .hero__content h2{
-        width: 100%;
-        font-size: 30px;
+    
+    .about-pic {
+        aspect-ratio: 1;
     }
-
-    .hero__socials{
-        position: relative;
-        flex-direction: row;
-        right: auto;
-        margin-top: 10px;
+    
+    .article-container {
+        justify-content: flex-start;
+    }
+    
+    .section__text__p2 {
+        font-size: 1.25rem;
     }
 
     .showcase__header h3{
