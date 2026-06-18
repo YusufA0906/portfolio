@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yusuf Ali - Works</title>
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Roboto", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1f2937;
+        }
+
+        img {
+            object-fit: cover;
+        }
+
+        body {
+            background: #fff;
+            color: #1f2937;
+            padding-top: 120px;
+        }
+
+        /* Navigation Bar (Matching original design style) */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            border: 1px solid #e8e8e8;
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 16px;
+            padding: 12px 24px; 
+            background: #fff; 
+            z-index: 1000; 
+            width: max-content; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav .logo img {
+            width: 30px;
+            height: 30px;
+        }
+
+        nav .logo a {
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav .nav-links a {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: #1f2937;
+        }
+
+        nav .github-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Works Section Layout */
+        .works-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .works-section h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: #000;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-item {
+            display: flex;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid #e5e7eb;
+            align-items: flex-start;
+        }
+
+        .project-item:first-child {
+            padding-top: 0;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-img-wrapper {
+            width: 340px;
+            height: 210px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .project-item:hover .project-img-wrapper img {
+            transform: scale(1.02);
+        }
+
+        .project-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 12px;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .project-year {
+            background: #2563eb; /* Tailored vibrant slate blue matching layout */
+            background: #1f2937; /* Clean uniform core matching original buttons */
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .project-category {
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.6;
+            max-width: 680px;
+        }
+
+        /* Footer (Matching original design style) */
+        .footer {
+            padding: 40px 60px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #e5e7eb;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer__brand {
+            display: flex;
+            align-items: flex-end;
+            gap: 30px;
+        }
+
+        .footer__brand a {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .footer__brand p {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .footer__links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer__links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.5s ease;
+        }
+
+        .footer__links a:hover {
+            color: #000;
+        }
+
+        /* Responsive Breakpoints */
+        @media screen and (max-width: 768px) {
+            body {
+                padding-top: 100px;
+            }
+            nav {
+                width: 90%;
+            }
+            .project-item {
+                flex-direction: column;
+                gap: 20px;
+                padding: 30px 0;
+            }
+            .project-img-wrapper {
+                width: 100%;
+                height: 220px;
+            }
+            .footer {
+                flex-direction: column-reverse;
+                gap: 16px;
+                padding: 20px;
+                text-align: center;
+            }
+            .footer__brand {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="#">Yusuf Ali</a>
+        </div>
+        <div class="nav-links">
+            <a href="#">Projects</a>
+            <a href="#">Blog</a>
+            <a href="#">Youtube</a>
+        </div>
+        <a href="https://github.com/YusufA0906" class="github-link"><i class="ri-github-fill"></i> Github</a>
+    </nav>
+
+    <section class="works-section">
+        <h1>Works</h1>
+
+        <div class="projects-list">
+            
+            <!-- Project 1 -->
+            <div class="project-item">
+                <div class="project-img-wrapper">
+                    <img src="assets/item-5.png" alt="Capture Screenshots">
+                </div>
+                <div class="project-info">
+                    <h2>Capture Screenshots</h2>
+                    <div class="project-meta">
+                        <span class="project-year">2023</span>
+                        <span class="project-category">JavaScript</span>
+                    </div>
+                    <p class="project-description">
+                        Eliminating data entry by connecting apps, automated invoicing scripts, and data scraping built to streamline recurring operating reports.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-item">
+                <div class="project-img-wrapper">
+                    <img src="assets/item-6.png" alt="Designing Login Form">
+                </div>
+                <div class="project-info">
+                    <h2>Designing Login Form</h2>
+                    <div class="project-meta">
+                        <span class="project-year">2023</span>
+                        <span class="project-category">Login Design</span>
+                    </div>
+                    <p class="project-description">
+                        Building clean, secure internal client portal credentials interfaces with unified brand layout validation constraints.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-item">
+                <div class="project-img-wrapper">
+                    <img src="assets/item-3.jpg" alt="Music Platform UI">
+                </div>
+                <div class="project-info">
+                    <h2>Music Platform UI</h2>
+                    <div class="project-meta">
+                        <span class="project-year">2024</span>
+                        <span class="project-category">UI Design</span>
+                    </div>
+                    <p class="project-description">
+                        Web development meets core UI optimization: creating internal clean design tools for businesses to track engagement metrics.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__brand">
+            <a href="#">Logo.</a>
+            <p>© 2026 Yusuf Ali.</p>
+        </div>
+        <div class="footer__links">
+            <a href="#">Home</a>
+            <a href="#">Projects</a>
+            <a href="#">Skills</a>
+            <a href="#">About</a>
+        </div>
+    </footer>
+
+</body>
+</html>

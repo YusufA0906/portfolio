@@ -257,6 +257,8 @@ nav button i {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .about-containers {
@@ -266,7 +268,7 @@ nav button i {
 }
 
 .details-container {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     flex: 1;
     background: white;
     border-radius: 2rem;
@@ -275,12 +277,29 @@ nav button i {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
+.details-container h3 {
+    font-size: 1.1rem; /* Slightly smaller heading size */
+    margin-bottom: 0.25rem;
+}
+
+.details-container p {
+    font-size: 0.9rem; /* Slightly smaller body size for cleaner line breaks */
+    line-height: 1.4;
+}
+
 .details-container .icon {
     font-size: 2rem;
     color: #1f2937;
     display: inline-block;
     margin-bottom: 0.5rem;
 }
+
+.text-container {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto; /* Keeps the text container centered on the page */
+}
+
 
 .text-container p {
     color: #6b7280;
