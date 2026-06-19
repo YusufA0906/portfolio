@@ -6,26 +6,15 @@
 {% block content %}
 
 <nav >
-
-        <div class="logo">
-            <img src="{% static 'assets/logo.png' %}">
-            <a href="#">Yusuf Ali</a>
-        </div>
-
-        <div class="nav-links">
-            <a href="#">Projects</a>
-            <a href="#">Blog</a>
-            <a href="#">Youtube</a>
-        </div>
-
-        <a href="https://github.com/YusufA0906"><i class="ri-github-fill"></i> Github</a>
-
+    {% include 'components/navbar.html' %}
 </nav>
 
 <section id="profile">
+    
     <div class="section__pic-container">
         <img src="{% static 'assets/profile.png' %}" alt="Yusuf Ali profile picture" class="profile-pic" />
     </div>
+
     <div class="section__text">
         <p class="section__text__p1">Hello, I'm</p>
         <h1 class="title">Yusuf Ali</h1>
@@ -442,16 +431,7 @@
     </section>
 
     <footer class="footer">
-        <div class="footer__brand">
-            <a href="#">Logo.</a>
-            <p>© 2026 Yusuf Ali.</p>
-        </div>
-        <div class="footer__links">
-            <a href="#">Home</a>
-            <a href="#">Projects</a>
-            <a href="#">Skills</a>
-            <a href="#">About</a>
-        </div>
+        {% include 'components/footer.html' %}
     </footer>
 
 
