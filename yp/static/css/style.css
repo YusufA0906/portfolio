@@ -18,11 +18,13 @@ img{
 
 body{
     background: #fff;
+    color: #1f2937;
+    padding-top: 120px;
 }
 
 .btn{
     border: 2px solid #1f2937;
-    background: #1f2937;
+    background: rgb(53, 56, 61);
     color: #fff;
     cursor: pointer;
     border-radius: 10px;
