@@ -1,204 +1,146 @@
+// Portfolio interactions: scroll reveals, typing effect, counters, card tilt,
+// navbar state, scroll progress and back-to-top.
+document.documentElement.classList.add('js');
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    const icon = themeToggle.querySelector('i');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Check for saved theme preference or prefer-color-scheme
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // ---- Navbar state, scroll progress & back-to-top -------------------
+    const nav = document.querySelector('nav');
+    const progress = document.querySelector('.scroll-progress');
+    const backToTop = document.querySelector('.back-to-top');
 
-    // Apply theme based on saved preference or system preference
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        html.classList.add('dark');
-        icon.classList.replace('fa-moon', 'fa-sun');
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000');
+    function onScroll() {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (progress) progress.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
+        if (nav) nav.classList.toggle('nav--scrolled', window.scrollY > 10);
+        if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 500);
     }
 
-    // Toggle theme when button is clicked
-    themeToggle.addEventListener('click', function () {
-        html.classList.toggle('dark');
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-        // Update the icon
-        if (html.classList.contains('dark')) {
-            icon.classList.replace('fa-moon', 'fa-sun');
-            localStorage.setItem('theme', 'dark');
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000');
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-            localStorage.setItem('theme', 'light');
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0070f3');
-        }
-    });
-
-    // Mobile navigation toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const closeMenu = document.getElementById('closeMenu');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    if (menuToggle && closeMenu && mobileMenu) {
-        menuToggle.addEventListener('click', function () {
-            mobileMenu.classList.remove('translate-x-full');
-            document.body.classList.add('overflow-hidden');
-        });
-
-        closeMenu.addEventListener('click', function () {
-            mobileMenu.classList.add('translate-x-full');
-            document.body.classList.remove('overflow-hidden');
-        });
-
-        // Close mobile menu when clicking on a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function () {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.classList.remove('overflow-hidden');
-            });
+    if (backToTop) {
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         });
     }
 
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
+    // ---- Reveal on scroll (with stagger) --------------------------------
+    document.querySelectorAll('[data-stagger]').forEach(function (parent) {
+        parent.querySelectorAll('[data-reveal]').forEach(function (el, i) {
+            el.style.setProperty('--d', (i * 0.12) + 's');
         });
     });
 
-    // Form submission handling
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            // Here you would typically send the data to a server
-            // For demo purposs, we'll just log it and show a success message
-            console.log('Form Submitted:', { name, email, message });
-
-            // Show success message
-            const button = contactForm.querySelector('button[type="submit"]');
-            const originalText = button.textContent;
-            button.textContent = 'Message Sent!';
-
-            // Reset form
-            contactForm.reset();
-
-            // Restore button text after a delay
-            setTimeout(() => {
-                button.textContent = originalText;
-            }, 3000);
-        });
-    }
-
-    // Add scroll events for header shadow and reveal animations
-    const header = document.querySelector('header');
-    const sections = document.querySelectorAll('section');
-
-    function checkScroll() {
-        // Header shadow
-        if (window.scrollY > 0) {
-            header.classList.add('shadow-md');
-        } else {
-            header.classList.remove('shadow-md');
-        }
-
-        // Reveal animations for sections
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-
-            if (sectionTop < windowHeight * 0.85) {
-                section.classList.add('opacity-100', 'translate-y-0');
-                section.classList.remove('opacity-0', 'translate-y-4');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', checkScroll);
-    // Run on page load
-    checkScroll();
-
-    // Add intersection observer for animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+    const revealObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-                entry.target.classList.add('opacity-100', 'translate-y-0');
-                entry.target.classList.remove('opacity-0', 'translate-y-4');
-                // Stop observing once the animation is triggered
+                entry.target.classList.add('revealed');
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-    // Terminal animation
-    const terminalContainer = document.getElementById('terminal-container');
-    const terminalContent = document.querySelector('.terminal-content');
-    const commandSpan = document.querySelector('.command-text');
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        revealObserver.observe(el);
+    });
 
-    if (terminalContainer && terminalContent && commandSpan) {
-        const commandText = "git clone https://github.com/AsmrProg-YT/Personal-Portfolios.git";
+    // ---- Typing effect for the hero role text ---------------------------
+    const typed = document.getElementById('typed');
+    if (typed) {
+        const phrases = JSON.parse(typed.dataset.phrases || '[]');
 
-        let i = 0;
-        const typeCommand = () => {
-            if (i < commandText.length) {
-                commandSpan.textContent += commandText.charAt(i);
-                i++;
-                setTimeout(typeCommand, 50);
-            } else {
-                // Add blinking cursor after typing
-                const cursor = document.createElement('span');
-                cursor.className = 'inline-block w-2 h-5 bg-gray-900 dark:bg-white ml-1 animate-blink align-middle';
-                terminalContent.appendChild(cursor);
-            }
-        };
+        if (reduceMotion || phrases.length === 0) {
+            typed.textContent = phrases[0] || '';
+        } else {
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let deleting = false;
 
-        // Start typing after a delay
-        setTimeout(typeCommand, 1000);
-    } else {
-        // Fallback for original terminal structure
-        const terminal = document.querySelector('.terminal-body');
-        if (terminal) {
-            const commandText = terminal.querySelector('.command').textContent;
-            terminal.querySelector('.command').textContent = '';
+            function tick() {
+                const phrase = phrases[phraseIndex];
 
-            let i = 0;
-            const typeCommand = () => {
-                if (i < commandText.length) {
-                    terminal.querySelector('.command').textContent += commandText.charAt(i);
-                    i++;
-                    setTimeout(typeCommand, 50);
+                if (deleting) {
+                    charIndex--;
                 } else {
-                    // Add blinking cursor after typing
-                    terminal.querySelector('.command').insertAdjacentHTML('afterend', '<span class="animate-blink">_</span>');
+                    charIndex++;
                 }
-            };
+                typed.textContent = phrase.slice(0, charIndex);
 
-            // Start typing after a delay
-            setTimeout(typeCommand, 1000);
+                let delay = deleting ? 35 : 70;
+                if (!deleting && charIndex === phrase.length) {
+                    delay = 2200; // pause on the full phrase
+                    deleting = true;
+                } else if (deleting && charIndex === 0) {
+                    deleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    delay = 400;
+                }
+                setTimeout(tick, delay);
+            }
+
+            tick();
         }
     }
 
+    // ---- Count-up stats --------------------------------------------------
+    const counterObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+
+            const el = entry.target;
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+
+            if (reduceMotion || isNaN(target)) {
+                el.textContent = (isNaN(target) ? '' : target) + suffix;
+                return;
+            }
+
+            const duration = 1400;
+            let start = null;
+
+            function step(timestamp) {
+                if (start === null) start = timestamp;
+                const t = Math.min((timestamp - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+                el.textContent = Math.round(eased * target) + suffix;
+                if (t < 1) requestAnimationFrame(step);
+            }
+
+            requestAnimationFrame(step);
+        });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+        counterObserver.observe(el);
+    });
+
+    // ---- Pause hero animations while it is scrolled out of view ---------
+    const hero = document.getElementById('profile');
+    if (hero) {
+        new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                hero.classList.toggle('hero-paused', !entry.isIntersecting);
+            });
+        }).observe(hero);
+    }
+
+    // ---- Subtle 3D tilt on project cards ---------------------------------
+    if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.project-card').forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                card.style.transform =
+                    'perspective(700px) rotateX(' + (-y * 6) + 'deg) rotateY(' + (x * 6) + 'deg) translateY(-6px)';
+            });
+            card.addEventListener('mouseleave', function () {
+                card.style.transform = '';
+            });
+        });
+    }
 });

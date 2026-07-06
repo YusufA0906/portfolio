@@ -10,16 +10,21 @@
 </nav>
 
 <section id="profile">
-    
-    <div class="section__pic-container">
+
+    <div class="hero-blob hero-blob--1"></div>
+    <div class="hero-blob hero-blob--2"></div>
+
+    <div class="section__pic-container" data-reveal="zoom">
         <img src="{% static 'assets/profile.png' %}" alt="Yusuf Ali profile picture" class="profile-pic" />
     </div>
 
-    <div class="section__text">
+    <div class="section__text" data-reveal>
         <p class="section__text__p1">Hello, I'm</p>
         <h1 class="title">Yusuf Ali</h1>
-        <p class="section__text__p2">Operations & Financial Technologist</p>
-        
+        <p class="section__text__p2">
+            <span id="typed" data-phrases='["Operations &amp; Financial Technologist", "Python Automation Specialist", "IT Infrastructure &amp; Security", "Cloud Accounting &amp; Tax Compliance"]'></span><span class="typing-cursor"></span>
+        </p>
+
         <div class="btn-container">
             <button class="btn btn--secondary" onclick="location.href='#'">
                 Work With Me
@@ -28,7 +33,7 @@
                 <i class="ri-github-fill"></i> My Github
             </button>
         </div>
-        
+
         <div id="socials-container">
             <i class="ri-youtube-line icon" onclick="location.href='#'"></i>
             <i class="ri-linkedin-box-line icon" onclick="location.href='#'"></i>
@@ -37,26 +42,26 @@
 </section>
 
 <section id="about" class="about-section">
-    <p class="section__text__p1">Get To Know More</p>
-    <h1 class="title">About Me</h1>
+    <p class="section__text__p1" data-reveal>Get To Know More</p>
+    <h1 class="title" data-reveal>About Me</h1>
 
     <div class="section-container">
 
         <div class="about-details-container">
-            <div class="about-containers">
-                <div class="details-container">
+            <div class="about-containers" data-stagger>
+                <div class="details-container" data-reveal>
                     <i class="ri-medal-line icon"></i>
                     <h3>Focus</h3>
                     <p>Python Automation <br />& IT Infrastructure</p>
                 </div>
-                <div class="details-container">
+                <div class="details-container" data-reveal>
                     <i class="ri-graduation-cap-line icon"></i>
                     <h3>Education</h3>
                     <p>B.Sc. in Computer Science<br />Sheridan College (In Progress)</p>
                 </div>
             </div>
-            
-            <div class="text-container">
+
+            <div class="text-container" data-reveal>
                 <p>
                     I am a proactive and detail-oriented Operations & Financial Technologist. I specialize in bridging the gap between complex IT infrastructure and financial compliance. By automating back-office workflows with Python and managing cloud ecosystems, I design secure financial structures so you can focus on growing your business with complete peace of mind.
                 </p>
@@ -67,12 +72,12 @@
 </section>
 
 <section id="experience" class="experience-section">
-    <p class="section__text__p1">Explore My</p>
-    <h1 class="title">Experience</h1>
+    <p class="section__text__p1" data-reveal>Explore My</p>
+    <h1 class="title" data-reveal>Experience</h1>
     <div class="experience-details-container">
-        <div class="about-containers">
+        <div class="about-containers" data-stagger>
 
-            <div class="details-container">
+            <div class="details-container" data-reveal>
                 <h2 class="experience-sub-title">Web & Databases</h2>
                 <div class="article-container">
                     <article>
@@ -99,7 +104,7 @@
                 </div>
             </div>
 
-            <div class="details-container">
+            <div class="details-container" data-reveal>
                 <h2 class="experience-sub-title">IT & Automation</h2>
                 <div class="article-container">
                     <article>
@@ -133,7 +138,7 @@
                 </div>
             </div>
 
-            <div class="details-container">
+            <div class="details-container" data-reveal>
                 <h2 class="experience-sub-title">Finance & Tax</h2>
                 <div class="article-container">
                     <article>
@@ -172,24 +177,24 @@
 
     <section class="skills">
 
-        <div class="skills__desc">
+        <div class="skills__desc" data-reveal="left">
             <h3>Experienced Across Multiple Projects and Technologies</h3>
             <p>Bringing creativity and technical proficiency to building responsive web applications and enhancing user
                 experiences.</p>
         </div>
 
-        <div class="skills__stats">
+        <div class="skills__stats" data-reveal="right">
 
             <i class="ri-codepen-line"></i>
 
             <div class="skill__info">
-                <h5>100%</h5>
+                <h5 data-count="100" data-suffix="%">100%</h5>
                 <p>CRA & IT Compliance</p>
             </div>
 
             <i class="ri-reactjs-line"></i>
             <div class="skill__info">
-                <h5>10k+</h5>
+                <h5 data-count="10" data-suffix="k+">10k+</h5>
                 <p>Lines of Code Written</p>
             </div>
 
@@ -212,7 +217,7 @@
 
     <section class="showcase">
 
-        <div class="showcase__header">
+        <div class="showcase__header" data-reveal>
             <h3>I Can Help You With:</h3>
             <button class="btn">See My Work</button>
         </div>
@@ -221,7 +226,7 @@
 
             <section class="category">
 
-                <div class="category__header">
+                <div class="category__header" data-reveal>
 
                     <div class="category__title">
                         <i class="ri-macbook-line"></i>
@@ -229,15 +234,15 @@
                     </div>
 
                     <div class="category__desc">
-                        <p>Accurately managing your corporate ledgers, implementing seamless cloud accounting ecosystems, and optimizing Canadian tax strategies to ensure strict CRA compliance. 
+                        <p>Accurately managing your corporate ledgers, implementing seamless cloud accounting ecosystems, and optimizing Canadian tax strategies to ensure strict CRA compliance.
                             I design secure financial structures so you can focus on growing your business with complete peace of mind.</p>
                         <a href="#"><i class="ri-share-circle-line"></i></a>
                     </div>
 
                 </div>
 
-                <div class="category__projects">
-                    <div class="project-card">
+                <div class="category__projects" data-stagger>
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-1.png' %}" alt="Portfolio 1" class="project-card__image">
 
                         <div class="project-card__info">
@@ -250,7 +255,7 @@
 
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-2.png' %}" alt="Portfolio 2" class="project-card__image">
                         <div class="project-card__info">
                             <h5>Cloud Bookkeeping Setup</h5>
@@ -260,7 +265,7 @@
                         <button class="btn">View Live Demo</button>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-3.jpg' %}" alt="Portfolio 3" class="project-card__image">
 
                         <div class="project-card__info">
@@ -271,9 +276,9 @@
                         <p class="project-card__desc">Web development meets finance: creating internal web tools for businesses to track their revenue and KPIs.</p>
                         <button class="btn">View Live Demo</button>
                     </div>
-                    
 
-                    <div class="project-card">
+
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-4.png' %}" alt="Portfolio 4" class="project-card__image">
 
                         <div class="project-card__info">
@@ -281,7 +286,7 @@
                             <p>August 2023</p>
                         </div>
 
-                        <p class="project-card__desc">Configuring automated payroll schedules, managing employee tax deductions, 
+                        <p class="project-card__desc">Configuring automated payroll schedules, managing employee tax deductions,
                             and ensuring seamless synchronization with your core accounting ledger</p>
                         <button class="btn">View Live Demo</button>
                     </div>
@@ -292,7 +297,7 @@
 
             <section class="category">
 
-                <div class="category__header">
+                <div class="category__header" data-reveal>
 
                     <div class="category__title">
                         <i class="ri-group-2-line"></i>
@@ -300,17 +305,17 @@
                     </div>
 
                     <div class="category__desc">
-                        <p>Eliminating repetitive manual data entry through custom Python scripting, securing local business networks, and deploying 
-                            tailored software tools to scale your operational efficiency. From foundational hardware 
+                        <p>Eliminating repetitive manual data entry through custom Python scripting, securing local business networks, and deploying
+                            tailored software tools to scale your operational efficiency. From foundational hardware
                             setups to automated workflows, I build the robust technical framework your business relies on.</p>
                         <a href="#"><i class="ri-share-circle-line"></i></a>
                     </div>
 
                 </div>
 
-                <div class="category__projects">
+                <div class="category__projects" data-stagger>
 
-                    <div class="project-card">
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-5.png' %}" alt="NFT Landing" class="project-card__image">
 
                         <div class="project-card__info">
@@ -321,8 +326,8 @@
                         <p class="project-card__desc">Eliminating data entry by connecting apps, automated invoicing scripts, and data scraping.</p>
                         <button class="btn">View Live Demo</button>
                     </div>
-                    
-                    <div class="project-card">
+
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-6.png' %}" alt="Music Platform" class="project-card__image">
 
                         <div class="project-card__info">
@@ -334,7 +339,7 @@
                         <button class="btn">View Live Demo</button>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-7.png' %}" alt="Crypto Market" class="project-card__image">
 
                         <div class="project-card__info">
@@ -346,7 +351,7 @@
                         <button class="btn">View Live Demo</button>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" data-reveal>
                         <img src="{% static 'assets/item-8.png' %}" alt="Jobs Platform" class="project-card__image">
 
                         <div class="project-card__info">
@@ -354,7 +359,7 @@
                             <p>August 2023</p>
                         </div>
 
-                        <p class="project-card__desc">Writing secure scripts to make your isolated software applications communicate, 
+                        <p class="project-card__desc">Writing secure scripts to make your isolated software applications communicate,
                             sync data automatically, and completely eliminate manual data transfers.</p>
                         <button class="btn">View Live Demo</button>
                     </div>
@@ -368,7 +373,7 @@
     </section>
 
     <section class="career">
-        <div class="career__jobs">
+        <div class="career__jobs" data-reveal="left">
             <h3>Technical Expertise</h3>
 
             <div class="job">
@@ -397,7 +402,7 @@
 
         </div>
 
-        <div class="career__awards">
+        <div class="career__awards" data-reveal="right">
             <h3>Certificates</h3>
             <div class="award">
 
@@ -441,22 +446,22 @@
     </section>
 
     <section class="contact">
-       <h2>Let's Work Together!</h2>
-    
-        <div class="items">
-            <div class="item">
+       <h2 data-reveal>Let's Work Together!</h2>
+
+        <div class="items" data-stagger>
+            <div class="item" data-reveal>
                 <a href="mailto:yusuf_ali0906@hotmail.com">Inquiries & Consulting</a>
                 <p>Drop a line to discuss workflow automation or financial accounting integrations.</p>
                 <a href="mailto:yusuf_ali0906@hotmail.com">
                     <button class="btn btn--secondary">Send Email</button>
                 </a>
-                
+
             </div>
 
-            <div class="item">
+            <div class="item" data-reveal>
                 <a href="tel:+16474060209">Direct Phone Line</a>
                 <p>Speak live to review server security parameters or Canadian tax frameworks.</p>
-                <button class="btn btn--secondary">Call Now</button>
+                <button class="btn btn--secondary" onclick="location.href='tel:+16474060209'">Call Now</button>
             </div>
         </div>
 

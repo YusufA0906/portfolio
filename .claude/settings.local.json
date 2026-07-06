@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& .\\\\venv\\\\Scripts\\\\python.exe -c \"import django; print\\(django.get_version\\(\\)\\)\")"
+    ]
+  }
+}
