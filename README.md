@@ -63,8 +63,20 @@ The site runs on a paid PythonAnywhere account at `www.yusufali.dev`. PythonAnyw
      | `/static/` | `/home/<username>/Portfolio/yp/staticfiles` |
      | `/media/` | `/home/<username>/Portfolio/yp/media` |
    - Click **Reload**.
-5. **DNS at Namecheap** — Domain List → yusufali.dev → **Advanced DNS** → add a **CNAME Record**: host `www`, value = the `webapp-XXXX.pythonanywhere.com` address shown on the Web tab. Remove any parking-page records for `www`. DNS can take up to a few hours to update.
-6. **HTTPS** — once the Web tab shows the domain working, set up the free **Let's Encrypt** certificate in the web app's *Security* section, then turn on **Force HTTPS**. `.dev` domains only load over HTTPS, so the site won't open in a browser until this is done.
+5. **DNS on Cloudflare (free plan).** The domain stays registered at Namecheap, but its DNS moves to Cloudflare. Namecheap can only redirect the bare `yusufali.dev` over plain HTTP, and `.dev` domains require HTTPS.
+   1. In Cloudflare, **Onboard a domain** → `yusufali.dev` → Free plan. Delete any imported records for `@` and `www` that point to Namecheap's parking page.
+   2. Add these DNS records:
+      | Type | Name | Content | Proxy status |
+      | --- | --- | --- | --- |
+      | CNAME | `www` | `webapp-XXXX.pythonanywhere.com` (from the Web tab) | **DNS only** (grey cloud) |
+      | A | `@` | `192.0.2.1` | **Proxied** (orange cloud) |
+
+      `www` must be *DNS only* so PythonAnywhere can issue and serve its own HTTPS certificate. The `@` record's address is a reserved placeholder that is never contacted: Cloudflare answers bare-domain requests itself and redirects them (next step).
+   3. **Rules → Redirect Rules → Create rule** ("Redirect from root to WWW"):
+      - When incoming requests match: wildcard pattern `https://yusufali.dev/*`
+      - Then: target URL `https://www.yusufali.dev/${1}`, status **301**, **Preserve query string** on.
+   4. In **Namecheap** → Domain List → yusufali.dev: if **DNSSEC** is on, turn it off first. Then under **Nameservers** choose **Custom DNS** and enter the two nameservers Cloudflare gave you. Activation can take up to 24 hours; Cloudflare emails you when the domain is *Active*.
+6. **HTTPS.** Once `www.yusufali.dev` resolves, set up the free **Let's Encrypt** certificate in the web app's *Security* section on PythonAnywhere, then turn on **Force HTTPS**. `.dev` domains only load over HTTPS, so the site won't open in a browser until this is done.
 
 ### Updating the live site
 
