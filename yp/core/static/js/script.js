@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (backToTop) {
         backToTop.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+            // Lenis (set up by the 3D module) owns smooth scrolling when present
+            if (window.lenis) window.lenis.scrollTo(0);
+            else window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         });
     }
 
@@ -128,9 +130,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }).observe(hero);
     }
 
-    // ---- Subtle 3D tilt on project cards ---------------------------------
+    // ---- Subtle 3D tilt on glass cards ------------------------------------
     if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-        document.querySelectorAll('.project-card').forEach(function (card) {
+        document.querySelectorAll('.project-card, .details-container').forEach(function (card) {
             card.addEventListener('mousemove', function (e) {
                 const rect = card.getBoundingClientRect();
                 const x = (e.clientX - rect.left) / rect.width - 0.5;

@@ -1,0 +1,409 @@
+/* ============================================================
+   Design concepts — html.concept-<name> is set in components/head.html.
+   "engine" is the base theme in style.css + animations.css; the others
+   override tokens and component styles here.
+   ============================================================ */
+
+/* ---- Concept switcher (temporary, for comparing designs) ---- */
+
+.concept-switcher {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 1600;
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--surface-strong);
+    border: 1px solid var(--border);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow);
+}
+
+.concept-switcher button {
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.concept-switcher button:hover {
+    color: var(--text);
+}
+
+.concept-switcher button.is-active {
+    background: var(--accent-grad);
+    color: var(--bg);
+}
+
+@media screen and (max-width: 520px) {
+    .concept-switcher {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 12px;
+    }
+
+    .concept-switcher button {
+        padding: 6px 9px;
+    }
+}
+
+/* ============================================================
+   Ledger City — the dark base theme with "city lights" accents
+   ============================================================ */
+
+html.concept-city {
+    --cyan: #38bdf8;
+    --emerald: #f59e0b;
+    --accent-grad: linear-gradient(90deg, #38bdf8, #f59e0b);
+    --surface: rgba(11, 16, 32, 0.6);
+    --surface-strong: rgba(11, 16, 32, 0.82);
+}
+
+.concept-city.has-webgl body::before {
+    background: radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(5, 7, 13, 0.6) 100%);
+}
+
+/* ============================================================
+   Liquid Glass — light, minimal, frosted white surfaces
+   ============================================================ */
+
+html.concept-glass {
+    --bg: #f3f5fa;
+    --bg-elevated: #ffffff;
+    --surface: rgba(255, 255, 255, 0.55);
+    --surface-strong: rgba(255, 255, 255, 0.82);
+    --surface-hover: rgba(255, 255, 255, 0.78);
+    --border: rgba(15, 23, 42, 0.08);
+    --border-strong: rgba(15, 23, 42, 0.16);
+    --text: #0f172a;
+    --text-muted: #475569;
+    --text-subtle: #64748b;
+    --cyan: #6366f1;
+    --emerald: #ec4899;
+    --accent-grad: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+    --glass-blur: blur(18px) saturate(1.6);
+    --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+    color-scheme: light;
+}
+
+.concept-glass body {
+    background:
+        radial-gradient(900px 600px at 10% 0%, rgba(165, 180, 252, 0.35), transparent 60%),
+        radial-gradient(800px 600px at 100% 40%, rgba(249, 168, 212, 0.28), transparent 60%),
+        var(--bg);
+    background-attachment: fixed;
+}
+
+.concept-glass.has-webgl body::before {
+    background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(243, 245, 250, 0.6) 100%);
+}
+
+.concept-glass nav {
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+.concept-glass nav.nav--scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.concept-glass nav .logo img {
+    filter: none;
+}
+
+.concept-glass nav > a,
+.concept-glass .btn--secondary,
+.concept-glass .project-card .btn,
+.concept-glass .back-to-top,
+.concept-glass .concept-switcher button.is-active {
+    color: #fff;
+}
+
+.concept-glass .btn:hover,
+.concept-glass nav > a:hover {
+    color: #fff;
+}
+
+.concept-glass .title,
+.concept-glass h1,
+.concept-glass h2,
+.concept-glass h3 {
+    letter-spacing: -0.03em;
+}
+
+.concept-glass #profile .title {
+    background: linear-gradient(90deg, #0f172a, #6366f1, #ec4899, #0f172a);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.concept-glass.has-webgl #profile .section__text p,
+.concept-glass.has-webgl #socials-container {
+    text-shadow: none;
+}
+
+.concept-glass .profile-pic {
+    border: 6px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
+}
+
+.concept-glass .text-container p {
+    color: #334155;
+}
+
+.concept-glass .details-container,
+.concept-glass .skill__info,
+.concept-glass .project-card,
+.concept-glass .contact .items,
+.concept-glass .text-container {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, var(--shadow);
+}
+
+.concept-glass .details-container:hover,
+.concept-glass .project-card:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 24px 55px rgba(99, 102, 241, 0.14);
+}
+
+.concept-glass .skill__info:hover {
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+.concept-glass .job i,
+.concept-glass .award div i,
+.concept-glass .category__title i {
+    color: #6366f1;
+}
+
+.concept-glass .contact .items .item:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.concept-glass .cursor__ring {
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.concept-glass .cursor.is-hover .cursor__ring::before {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.concept-glass .cursor__ring::after {
+    color: #fff;
+}
+
+.concept-glass.no-webgl .section__pic-container::before {
+    background: radial-gradient(circle, rgba(165, 180, 252, 0.7) 0%, rgba(249, 168, 212, 0.4) 45%, transparent 70%);
+}
+
+@media screen and (max-width: 768px) {
+    .concept-glass .details-container,
+    .concept-glass .skill__info,
+    .concept-glass .project-card,
+    .concept-glass .contact .items,
+    .concept-glass .text-container {
+        background: rgba(255, 255, 255, 0.86);
+    }
+}
+
+/* ============================================================
+   Retro Terminal — green phosphor, monospace, scanlines
+   ============================================================ */
+
+html.concept-terminal {
+    --bg: #040805;
+    --bg-elevated: #07120a;
+    --surface: rgba(4, 18, 9, 0.62);
+    --surface-strong: rgba(3, 14, 7, 0.88);
+    --surface-hover: rgba(8, 30, 15, 0.75);
+    --border: rgba(51, 255, 136, 0.22);
+    --border-strong: rgba(51, 255, 136, 0.4);
+    --text: #c4ffd8;
+    --text-muted: #6fd897;
+    --text-subtle: #46a56c;
+    --cyan: #33ff88;
+    --emerald: #a3ff3c;
+    --accent-grad: linear-gradient(90deg, #33ff88, #a3ff3c);
+    --glass-blur: blur(8px);
+    --shadow: 0 0 0 1px rgba(51, 255, 136, 0.06), 0 20px 50px rgba(0, 0, 0, 0.6);
+    --font-body: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+    --font-heading: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+}
+
+.concept-terminal body {
+    background: radial-gradient(1000px 700px at 50% 0%, rgba(51, 255, 136, 0.06), transparent 60%), var(--bg);
+    background-attachment: fixed;
+}
+
+/* CRT scanlines over the whole page */
+.concept-terminal body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1900;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.08) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+}
+
+.concept-terminal h1,
+.concept-terminal h2,
+.concept-terminal h3,
+.concept-terminal .title {
+    text-shadow: 0 0 10px rgba(51, 255, 136, 0.35);
+    letter-spacing: -0.02em;
+}
+
+.concept-terminal .title::before {
+    content: '> ';
+    color: var(--text-subtle);
+}
+
+.concept-terminal #profile .title {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: var(--cyan);
+    animation: none;
+}
+
+.concept-terminal .section__text__p1::before {
+    content: '$ ';
+    color: var(--text-subtle);
+}
+
+.concept-terminal .typing-cursor {
+    width: 0.55em;
+    background: var(--cyan);
+}
+
+/* The photo becomes what's on the CRT */
+.concept-terminal .profile-pic {
+    border-radius: 10px;
+    border: 1px solid rgba(51, 255, 136, 0.5);
+    filter: grayscale(1) sepia(1) hue-rotate(75deg) saturate(2.2) brightness(0.95) contrast(1.15);
+    box-shadow: 0 0 40px rgba(51, 255, 136, 0.35);
+}
+
+.concept-terminal .section__pic-container {
+    animation: none;
+}
+
+/* Cards become terminal windows */
+.concept-terminal .details-container,
+.concept-terminal .project-card,
+.concept-terminal .text-container,
+.concept-terminal .contact .items,
+.concept-terminal .skill__info {
+    position: relative;
+    border-radius: 6px;
+    padding-top: 44px;
+}
+
+.concept-terminal .project-card {
+    padding-top: 40px;
+}
+
+.concept-terminal .details-container::before,
+.concept-terminal .project-card::before,
+.concept-terminal .text-container::before,
+.concept-terminal .contact .items::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    border-bottom: 1px solid var(--border);
+    background:
+        radial-gradient(circle at 14px 13px, #ff5f56 4px, transparent 5px),
+        radial-gradient(circle at 30px 13px, #ffbd2e 4px, transparent 5px),
+        radial-gradient(circle at 46px 13px, #27c93f 4px, transparent 5px),
+        rgba(51, 255, 136, 0.06);
+    border-radius: 6px 6px 0 0;
+}
+
+.concept-terminal .skill__info {
+    padding-top: 20px;
+}
+
+.concept-terminal .contact .items {
+    padding-top: 26px;
+}
+
+.concept-terminal .btn {
+    border-radius: 4px;
+    border-color: var(--border-strong);
+    color: var(--cyan);
+    background: transparent;
+}
+
+.concept-terminal .btn:hover {
+    background: var(--cyan);
+    color: #031006;
+}
+
+.concept-terminal .btn--secondary,
+.concept-terminal .project-card .btn {
+    background: var(--cyan);
+    color: #031006;
+    box-shadow: 0 0 18px rgba(51, 255, 136, 0.35);
+}
+
+.concept-terminal #profile .btn {
+    border-radius: 4px;
+}
+
+.concept-terminal nav {
+    border-radius: 6px;
+    background: rgba(3, 14, 7, 0.75);
+}
+
+.concept-terminal nav .logo img {
+    filter: invert(1) sepia(1) hue-rotate(75deg) saturate(3);
+}
+
+.concept-terminal nav > a {
+    border-radius: 4px;
+    background: var(--cyan);
+    color: #031006;
+}
+
+.concept-terminal .job i,
+.concept-terminal .award div i,
+.concept-terminal .category__title i,
+.concept-terminal .back-to-top,
+.concept-terminal .concept-switcher {
+    border-radius: 6px;
+}
+
+.concept-terminal .back-to-top,
+.concept-terminal .concept-switcher button.is-active {
+    color: #031006;
+}
+
+.concept-terminal .text-container p {
+    color: var(--text);
+}
+
+.concept-terminal .cursor__dot {
+    border-radius: 0;
+    width: 8px;
+    height: 14px;
+    margin: -7px 0 0 -4px;
+    animation: blink 1s steps(2) infinite;
+}
+
+.concept-terminal.no-webgl .section__pic-container::before {
+    border-radius: 16px;
+    background: radial-gradient(circle, rgba(51, 255, 136, 0.35) 0%, transparent 70%);
+}

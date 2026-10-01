@@ -3,16 +3,57 @@
 
 {% block title %} Yusuf Ali Portfolio {% endblock %}
 
+{% block head_extra %}
+<script>
+    // Decide before first paint whether the 3D intro loader should show.
+    (function () {
+        var d = document.documentElement;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            !/[?&]motion/.test(window.location.search);
+        var gl = false;
+        try {
+            var c = document.createElement('canvas');
+            gl = !!(window.WebGL2RenderingContext && c.getContext('webgl2')) || !!c.getContext('webgl');
+        } catch (e) {}
+        d.classList.add(gl ? 'has-webgl' : 'no-webgl');
+        if (gl && !reduce) {
+            d.classList.add('is-loading');
+            // Safety net: never trap the page behind the loader if a CDN module fails.
+            setTimeout(function () { d.classList.remove('is-loading'); }, 6000);
+        }
+    })();
+</script>
+{% endblock %}
+
+{% block scene %}
+<canvas id="webgl" aria-hidden="true"></canvas>
+
+<div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+        <span class="loader__label">Initializing data engine</span>
+        <span class="loader__count"><span id="loader-count">0</span>%</span>
+        <span class="loader__bar"><span id="loader-bar"></span></span>
+    </div>
+</div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+<!-- Temporary: compare design concepts -->
+<div class="concept-switcher" role="group" aria-label="Design concept">
+    <button type="button" data-concept="engine">Engine</button>
+    <button type="button" data-concept="city">City</button>
+    <button type="button" data-concept="glass">Glass</button>
+    <button type="button" data-concept="terminal">Terminal</button>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <nav >
     {% include 'components/navbar.html' %}
 </nav>
 
-<section id="profile">
-
-    <div class="hero-blob hero-blob--1"></div>
-    <div class="hero-blob hero-blob--2"></div>
+<section id="profile" data-station="hero">
 
     <div class="section__pic-container" data-reveal="zoom">
         <img src="{% static 'assets/profile.png' %}" alt="Yusuf Ali profile picture" class="profile-pic" />
@@ -26,7 +67,7 @@
         </p>
 
         <div class="btn-container">
-            <button class="btn btn--secondary" onclick="location.href='#'">
+            <button class="btn btn--secondary" onclick="location.href='#contact'">
                 Work With Me
             </button>
             <button class="btn" onclick="location.href='https://github.com/YusufA0906'">
@@ -41,7 +82,7 @@
     </div>
 </section>
 
-<section id="about" class="about-section">
+<section id="about" class="about-section" data-station="about">
     <p class="section__text__p1" data-reveal>Get To Know More</p>
     <h1 class="title" data-reveal>About Me</h1>
 
@@ -71,7 +112,7 @@
 
 </section>
 
-<section id="experience" class="experience-section">
+<section id="experience" class="experience-section" data-station="experience">
     <p class="section__text__p1" data-reveal>Explore My</p>
     <h1 class="title" data-reveal>Experience</h1>
     <div class="experience-details-container">
@@ -175,7 +216,7 @@
     </div>
 </section>
 
-    <section class="skills">
+    <section class="skills" data-station="skills">
 
         <div class="skills__desc" data-reveal="left">
             <h3>Experienced Across Multiple Projects and Technologies</h3>
@@ -215,11 +256,11 @@
 
     </section>
 
-    <section class="showcase">
+    <section id="work" class="showcase" data-station="showcase">
 
         <div class="showcase__header" data-reveal>
             <h3>I Can Help You With:</h3>
-            <button class="btn">See My Work</button>
+            <button class="btn" onclick="location.href='{% url 'projects' %}'">See My Work</button>
         </div>
 
         <div class="showcase_categories">
@@ -372,7 +413,7 @@
 
     </section>
 
-    <section class="career">
+    <section class="career" data-station="certificates">
         <div class="career__jobs" data-reveal="left">
             <h3>Technical Expertise</h3>
 
@@ -445,7 +486,7 @@
 
     </section>
 
-    <section class="contact">
+    <section id="contact" class="contact" data-station="contact">
        <h2 data-reveal>Let's Work Together!</h2>
 
         <div class="items" data-stagger>
@@ -471,5 +512,8 @@
         {% include 'components/footer.html' %}
     </footer>
 
+{% endblock %}
 
+{% block scripts %}
+<script type="module" src="{% static 'js/three/main.js' %}"></script>
 {% endblock %}

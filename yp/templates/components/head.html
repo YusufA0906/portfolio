@@ -1,18 +1,47 @@
 {% load static %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070d">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/project_style.css' %}">
 <link rel="stylesheet" href="{% static 'css/animations.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+<link rel="stylesheet" href="{% static 'css/concepts.css' %}">
 
 <!-- Remix Icons -->
-<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
 
-<!-- Flag JS availability early so scroll-reveal elements are only hidden when JS will reveal them -->
-<script>document.documentElement.classList.add('js');</script>
+<!-- ES module dependencies for the 3D scene (no bundler) -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.mjs"
+    }
+}
+</script>
+
+<!-- Flag JS availability early so scroll-reveal elements are only hidden when JS will reveal them,
+     and apply the active design concept before first paint (same rules as getConcept() in js/three/utils.js) -->
+<script>
+    (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var concepts = ['engine', 'city', 'glass', 'terminal'];
+        var concept = new URLSearchParams(window.location.search).get('concept');
+        if (concepts.indexOf(concept) < 0) {
+            try { concept = localStorage.getItem('concept'); } catch (e) { concept = null; }
+        }
+        if (concepts.indexOf(concept) < 0) concept = 'engine';
+        d.classList.add('concept-' + concept);
+    })();
+</script>
 <script src="{% static 'js/script.js' %}" defer></script>

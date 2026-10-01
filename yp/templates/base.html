@@ -4,10 +4,13 @@
    <head>
         {% include 'components/head.html' %}
         <title>{% block title %}{% endblock %}</title>
+        {% block head_extra %}{% endblock %}
    </head>
 
     <body class="">
         <div class="scroll-progress"></div>
+
+        {% block scene %}{% endblock %}
 
         {% block content %}
 
@@ -16,5 +19,7 @@
         <button class="back-to-top" aria-label="Back to top">
             <i class="ri-arrow-up-line"></i>
         </button>
+
+        {% block scripts %}{% endblock %}
     </body>
-</html> 
+</html>

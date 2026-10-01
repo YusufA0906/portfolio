@@ -9,7 +9,7 @@
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 48px;
-            color: #000;
+            color: var(--text);
         }
 
         .projects-list {
@@ -21,7 +21,7 @@
             display: flex;
             gap: 40px;
             padding: 40px 0;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--border);
             align-items: flex-start;
         }
 
@@ -39,8 +39,8 @@
             flex-shrink: 0;
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
         .project-img-wrapper img {
@@ -63,7 +63,7 @@
         .project-info h2 {
             font-size: 24px;
             font-weight: 700;
-            color: #000;
+            color: var(--text);
             margin-bottom: 12px;
         }
 
@@ -75,9 +75,8 @@
         }
 
         .project-year {
-            background: #2563eb; /* Tailored vibrant slate blue matching layout */
-            background: #1f2937; /* Clean uniform core matching original buttons */
-            color: #fff;
+            background: var(--accent-grad);
+            color: var(--bg);
             font-size: 12px;
             font-weight: 600;
             padding: 4px 12px;
@@ -85,14 +84,14 @@
         }
 
         .project-category {
-            color: #9ca3af;
+            color: var(--text-muted);
             font-size: 14px;
             font-weight: 600;
         }
 
         .project-description {
             font-size: 15px;
-            color: #4b5563;
+            color: var(--text-muted);
             line-height: 1.6;
             max-width: 680px;
         }
