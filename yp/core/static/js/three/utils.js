@@ -1,4 +1,4 @@
-// Shared helpers for the 3D scene: device capabilities, math and GLSL chunks.
+// Shared helpers for the background: device capabilities, tunables, math and GLSL noise.
 
 const mq = (q) => window.matchMedia(q).matches;
 
@@ -11,75 +11,31 @@ export const caps = {
     finePointer: mq('(pointer: fine)'),
 };
 
-// ---- Concepts -------------------------------------------------------------
-// Alternative designs under comparison. The inline script in index.html applies
-// the same rules (URL ?concept= > remembered choice > default) before first paint.
-export const CONCEPTS = ['engine', 'city', 'glass', 'terminal'];
-export const DEFAULT_CONCEPT = 'engine';
-
-export function getConcept() {
-    const fromUrl = new URLSearchParams(window.location.search).get('concept');
-    if (CONCEPTS.includes(fromUrl)) return fromUrl;
-    try {
-        const saved = localStorage.getItem('concept');
-        if (CONCEPTS.includes(saved)) return saved;
-    } catch (e) { /* storage blocked */ }
-    return DEFAULT_CONCEPT;
-}
-
 // ---- Tunables -------------------------------------------------------------
 // Everything worth tweaking lives here. See README "3D scene" section.
 export const CONFIG = {
+    // Keep in sync with --bg and --accent in style.css
     colors: {
-        background: 0x05070d,
-        cyan: 0x22d3ee,
-        emerald: 0x10b981,
-        white: 0xe6edf6,
+        background: 0x11100e,
+        accent: 0xd9773b,
     },
-    particles: {
-        desktop: 3000,
-        mobileFactor: 0.3, // ~70% fewer particles on phones
+    aurora: {
+        intensity: 0.1,        // peak strength of the glow (0-1)
+        speed: 0.08,           // drift speed of the glow over time
+        scrollShift: 0.5,      // how far the glow swings per page section
+        pointerStrength: 0.03, // pointer parallax as a fraction of the screen
+        resolutionScale: 0.5,  // render size vs. CSS size (it's a blur anyway)
     },
-    stars: 1400,
-    bloom: { strength: 0.6, radius: 0.4, threshold: 0.55 },
-    maxPixelRatio: 2,
-    fov: 45,
-    // How quickly the camera catches up with the scroll position (per second)
+    // How quickly the background catches up with the scroll position (per second)
     scrollDamping: 4.5,
-    // Hero core halo radius in world units (the camera distance adapts so the
-    // halo frames the profile picture at any viewport size)
-    coreRadius: 1.25,
 };
-
-export const particleCount = () =>
-    Math.round(CONFIG.particles.desktop * (caps.isMobile ? CONFIG.particles.mobileFactor : 1));
 
 export const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 export const lerp = (a, b, t) => a + (b - a) * t;
-export const smoothstep = (a, b, v) => {
-    const t = clamp((v - a) / (b - a), 0, 1);
-    return t * t * (3 - 2 * t);
-};
 // Frame-rate independent exponential smoothing
 export const damp = (current, target, lambda, dt) => lerp(current, target, 1 - Math.exp(-lambda * dt));
 
-// Bell-shaped "how close is the scroll to this station" in [0, 1]
-export const proximity = (s, station, width = 0.6) => {
-    const d = (s - station) / width;
-    return Math.exp(-d * d);
-};
-
-// Deterministic PRNG so the scene looks the same on every load
-export function mulberry32(seed) {
-    return function () {
-        let t = (seed += 0x6d2b79f5);
-        t = Math.imul(t ^ (t >>> 15), t | 1);
-        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-}
-
-// Ashima 3D simplex noise (MIT) — used by the core's vertex displacement
+// Ashima 3D simplex noise (MIT) — warps the aurora glows
 export const GLSL_NOISE = /* glsl */ `
 vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
 vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}

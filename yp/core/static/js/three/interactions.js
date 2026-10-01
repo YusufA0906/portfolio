@@ -14,11 +14,12 @@ export function initSmoothScroll() {
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
 
-    // In-page anchors glide instead of jumping
+    // In-page anchors (including "/#about" while on "/") glide instead of jumping
     document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href^="#"]');
-        if (!link || link.getAttribute('href').length < 2) return;
-        const target = document.querySelector(link.getAttribute('href'));
+        const link = e.target.closest('a[href*="#"]');
+        if (!link || link.hash.length < 2) return;
+        if (link.origin !== location.origin || link.pathname !== location.pathname) return;
+        const target = document.getElementById(link.hash.slice(1));
         if (!target) return;
         e.preventDefault();
         lenis.scrollTo(target, { offset: -100 });
@@ -29,13 +30,13 @@ export function initSmoothScroll() {
     return lenis;
 }
 
-const HOVERABLE = 'a, button, .project-card, .details-container, .icon, [data-cursor]';
+const HOVERABLE = 'a, button, .project-card, .icon, [data-cursor]';
 
 export function initCursor() {
-    if (caps.reducedMotion || !caps.finePointer || caps.isMobile) return null;
+    if (caps.reducedMotion || !caps.finePointer || caps.isMobile) return;
 
     const el = document.querySelector('.cursor');
-    if (!el) return null;
+    if (!el) return;
     document.documentElement.classList.add('has-cursor');
 
     const dot = el.querySelector('.cursor__dot');
@@ -62,14 +63,6 @@ export function initCursor() {
         dot.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
         ring.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0)`;
     });
-
-    return {
-        // Lets the 3D scene show a "view" cursor over WebGL project cards
-        setLabel(label) {
-            el.classList.toggle('is-view', !!label);
-            ring.dataset.label = label || '';
-        },
-    };
 }
 
 export function initMagnetic() {

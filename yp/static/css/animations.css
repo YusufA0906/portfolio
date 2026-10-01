@@ -9,12 +9,14 @@ html {
 
 h1, h2, h3, h4, h5,
 .title,
-nav .logo a {
+nav .logo span {
     font-family: var(--font-heading);
+    font-weight: 500;
+    letter-spacing: -0.01em;
 }
 
 /* ============================================================
-   WebGL canvas, loader & fallbacks
+   WebGL canvas & fallback
    ============================================================ */
 
 #webgl {
@@ -22,95 +24,32 @@ nav .logo a {
     inset: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -2; /* below the vignette in body::before */
+    z-index: -2;
     display: block;
     pointer-events: none;
-    transition: opacity 0.38s ease;
-}
-
-#webgl.is-faded {
-    opacity: 0;
 }
 
 .no-webgl #webgl {
     display: none;
 }
 
-/* Keeps the copy readable where the 3D scene is brightest */
-.has-webgl body::before {
+/* Without WebGL, a static version of the glow stands in for the canvas */
+.no-webgl body {
+    background:
+        radial-gradient(ellipse 70% 60% at 15% 20%, rgba(217, 119, 59, 0.08), transparent 70%),
+        var(--bg);
+    background-attachment: fixed;
+}
+
+/* Film grain over everything (static, so it costs nothing per frame) */
+body::after {
     content: '';
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 1;
     pointer-events: none;
-    background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(5, 7, 13, 0.55) 100%);
-}
-
-.loader {
-    position: fixed;
-    inset: 0;
-    z-index: 3000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.7s ease, visibility 0.7s ease;
-}
-
-.is-loading .loader {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.loader__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    width: min(320px, 80vw);
-}
-
-.loader__label {
-    font-size: 12px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-.loader__count {
-    font-family: var(--font-heading);
-    font-size: clamp(56px, 12vw, 96px);
-    font-weight: 600;
-    line-height: 1;
-    background: var(--accent-grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-variant-numeric: tabular-nums;
-}
-
-.loader__bar {
-    width: 100%;
-    height: 2px;
-    background: var(--border);
-    overflow: hidden;
-}
-
-.loader__bar span {
-    display: block;
-    height: 100%;
-    background: var(--accent-grad);
-    transform: scaleX(0);
-    transform-origin: 0 50%;
-}
-
-/* Hide content during the intro so the hero animates in after ignition */
-.is-loading body {
-    overflow: hidden;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ============================================================
@@ -165,14 +104,14 @@ html.lenis body {
     width: 6px;
     height: 6px;
     margin: -3px 0 0 -3px;
-    background: var(--cyan);
+    background: var(--accent);
 }
 
 .cursor__ring {
     width: 36px;
     height: 36px;
     margin: -18px 0 0 -18px;
-    border: 1px solid rgba(34, 211, 238, 0.55);
+    border: 1px solid rgba(236, 230, 220, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,35 +125,14 @@ html.lenis body {
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
 }
 
-.cursor__ring::after {
-    content: attr(data-label);
-    font-family: var(--font-heading);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--bg);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
 .cursor.is-hover .cursor__ring {
     border-color: transparent;
 }
 
 .cursor.is-hover .cursor__ring::before {
     transform: scale(1.7);
-    background: rgba(34, 211, 238, 0.14);
-    border: 1px solid rgba(34, 211, 238, 0.5);
-}
-
-.cursor.is-view .cursor__ring::before {
-    transform: scale(2.2);
-    background: var(--cyan);
-}
-
-.cursor.is-view .cursor__ring::after {
-    opacity: 1;
+    background: rgba(217, 119, 59, 0.12);
+    border: 1px solid rgba(217, 119, 59, 0.5);
 }
 
 .cursor.is-down .cursor__ring::before {
@@ -242,20 +160,6 @@ html.lenis body {
     50%      { opacity: 0; }
 }
 
-@keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50%      { background-position: 100% 50%; }
-}
-
-@keyframes shine {
-    to { left: 125%; }
-}
-
-@keyframes highlight {
-    0%, 100% { box-shadow: var(--shadow); }
-    30%      { box-shadow: 0 0 0 2px var(--cyan), 0 0 40px rgba(34, 211, 238, 0.45); }
-}
-
 /* ============================================================
    Scroll progress bar
    ============================================================ */
@@ -266,27 +170,27 @@ html.lenis body {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--accent-grad);
+    background: var(--accent);
     transform: scaleX(0);
     transform-origin: 0 0;
     z-index: 2000;
 }
 
 /* ============================================================
-   Navbar — frosted glass, fixed on scroll
+   Navbar — fixed on scroll
    ============================================================ */
 
 nav {
     position: fixed;
-    background: rgba(8, 12, 22, 0.6);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
-    backdrop-filter: blur(14px) saturate(1.4);
+    background: rgba(17, 16, 14, 0.72);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
 nav.nav--scrolled {
-    background: rgba(8, 12, 22, 0.82);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    background: rgba(17, 16, 14, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 nav .nav-links a {
@@ -301,7 +205,7 @@ nav .nav-links a::after {
     bottom: -2px;
     height: 1px;
     width: 100%;
-    background: var(--accent-grad);
+    background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -312,7 +216,7 @@ nav .nav-links a:hover::after {
 }
 
 /* ============================================================
-   Hero — the 3D core halos the profile photo (see main.js)
+   Hero
    ============================================================ */
 
 #profile {
@@ -325,12 +229,6 @@ nav .nav-links a:hover::after {
     z-index: 1;
 }
 
-/* Soft dark backdrop so the copy stays legible over the particle cloud */
-.has-webgl #profile .section__text p,
-.has-webgl #socials-container {
-    text-shadow: 0 2px 18px rgba(5, 7, 13, 0.95), 0 0 2px rgba(5, 7, 13, 0.9);
-}
-
 .section__pic-container {
     position: relative;
     animation: float 6s ease-in-out infinite;
@@ -339,35 +237,19 @@ nav .nav-links a:hover::after {
 .profile-pic {
     position: relative;
     z-index: 1;
-    border: 1px solid rgba(34, 211, 238, 0.45);
-    box-shadow: 0 0 0 6px rgba(5, 7, 13, 0.6), 0 0 60px rgba(34, 211, 238, 0.25);
-}
-
-/* Without WebGL, a soft CSS halo stands in for the 3D core */
-.no-webgl .section__pic-container::before {
-    content: '';
-    position: absolute;
-    inset: -14%;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, rgba(16, 185, 129, 0.15) 45%, transparent 70%);
+    border: 1px solid var(--border-strong);
 }
 
 /* Pause hero animations while the hero is scrolled out of view (toggled in JS) */
 #profile.hero-paused .section__pic-container,
-#profile.hero-paused .title,
 #profile.hero-paused .typing-cursor {
     animation-play-state: paused;
 }
 
 #profile .title {
     font-size: clamp(2.75rem, 6vw, 4.5rem);
-    background: linear-gradient(90deg, var(--text), var(--cyan), var(--emerald), var(--text));
-    background-size: 300% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    animation: gradientShift 8s ease infinite;
+    font-weight: 400;
+    letter-spacing: -0.02em;
 }
 
 .typing-cursor {
@@ -376,7 +258,7 @@ nav .nav-links a:hover::after {
     height: 1.1em;
     margin-left: 4px;
     vertical-align: -0.15em;
-    background: var(--cyan);
+    background: var(--accent);
     animation: blink 1s steps(2) infinite;
 }
 
@@ -387,11 +269,11 @@ nav .nav-links a:hover::after {
     width: 64px;
     height: 3px;
     border-radius: 2px;
-    background: var(--accent-grad);
+    background: var(--accent);
     margin: 14px auto 0;
 }
 
-/* Hero copy rises in once the core ignites */
+/* Hero copy rises in once the background's first frame is drawn */
 .has-webgl #profile .section__text,
 .has-webgl #profile .section__pic-container {
     transition: opacity 1.2s ease 0.25s, translate 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
@@ -424,70 +306,29 @@ nav .nav-links a:hover::after {
 }
 
 /* ============================================================
-   Buttons — lift + shine sweep (+ magnetic pull from JS via `translate`)
+   Buttons — lift (+ magnetic pull from JS via `translate`)
    ============================================================ */
 
 .btn {
     position: relative;
-    overflow: hidden;
 }
 
 .btn:hover {
     transform: translateY(-2px);
 }
 
-.btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-    transform: skewX(-20deg);
-    pointer-events: none;
-}
-
-.btn:hover::after {
-    animation: shine 0.8s ease;
-}
-
 /* ============================================================
    Cards & micro-interactions
    ============================================================ */
 
-.details-container {
-    transition: transform 0.18s ease-out, box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
-}
-
-.details-container:hover {
-    background: var(--surface-hover);
-    border-color: rgba(34, 211, 238, 0.35);
-    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(34, 211, 238, 0.12);
-}
-
-.skill__info {
-    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-}
-
-.skill__info:hover {
-    background: var(--surface-hover);
-    border-color: rgba(16, 185, 129, 0.4);
-    transform: translateY(-4px);
-}
-
-/* Project cards: glow + image zoom (3D tilt handled in JS) */
+/* Project cards: lift + image zoom (3D tilt handled in JS) */
 .project-card {
     transition: transform 0.18s ease-out, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .project-card:hover {
-    border-color: rgba(34, 211, 238, 0.35);
-    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.5), 0 0 40px rgba(34, 211, 238, 0.12);
-}
-
-.project-card.is-highlighted {
-    animation: highlight 1.6s ease;
+    border-color: var(--border-strong);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
 }
 
 .project-card__image {
@@ -504,7 +345,7 @@ nav .nav-links a:hover::after {
 
 #socials-container .icon:hover {
     transform: translateY(-4px) scale(1.15);
-    color: var(--cyan);
+    color: var(--accent);
 }
 
 .job i,
@@ -514,20 +355,12 @@ nav .nav-links a:hover::after {
 
 .job:hover i,
 .award:hover > div i {
-    background: var(--accent-grad);
-    color: var(--bg);
+    background: var(--accent);
+    color: var(--on-accent);
     transform: rotate(-6deg) scale(1.08);
 }
 
-.contact .items .item {
-    transition: background 0.3s ease;
-}
-
-.contact .items .item:hover {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-/* Works page (projects.html) */
+/* Projects page (projects.html) */
 .project-item {
     transition: transform 0.35s ease;
 }
@@ -541,7 +374,7 @@ nav .nav-links a:hover::after {
 }
 
 .project-item:hover .project-info h2 {
-    color: var(--cyan);
+    color: var(--accent);
 }
 
 .project-item:hover .project-img-wrapper img {
@@ -564,9 +397,9 @@ nav .nav-links a:hover::after {
     align-items: center;
     justify-content: center;
     font-size: 22px;
-    color: var(--bg);
-    background: var(--accent-grad);
-    box-shadow: 0 10px 25px rgba(34, 211, 238, 0.3);
+    color: var(--on-accent);
+    background: var(--accent);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
     cursor: pointer;
     opacity: 0;
     pointer-events: none;
@@ -597,7 +430,7 @@ nav .nav-links a:hover::after {
         padding: 10px 16px;
     }
 
-    nav .logo a {
+    nav .logo span {
         display: none; /* icon-only logo, the name is right below in the hero */
     }
 

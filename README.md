@@ -1,55 +1,136 @@
 # Portfolio
 
-Django portfolio site for Yusuf Ali.
+Django portfolio site for Yusuf Ali, live at https://www.yusufali.dev.
+
+## Local development
 
 ```bash
+python -m venv venv
+venv\Scripts\activate          # macOS/Linux: source venv/bin/activate
+pip install -r requirements.txt
+copy yp\.env.example yp\.env   # then set DJANGO_DEBUG=1 in it
+python yp/manage.py migrate
 python yp/manage.py runserver
 ```
 
-## 3D scene
+Settings that differ between your machine and the live server (debug mode, secret key, allowed hosts) come from `yp/.env`, which is git-ignored. Debug is **off** unless `DJANGO_DEBUG=1` is set.
 
-The home page renders one fixed, full-screen WebGL canvas (`#webgl`) behind all of the regular HTML content. Scrolling flies the camera through a series of "stations", one per page section. All content stays real, semantic HTML. The canvas is decorative (`aria-hidden`).
+## Deployment (PythonAnywhere + Namecheap)
+
+The site runs on a paid PythonAnywhere account at `www.yusufali.dev`. PythonAnywhere attaches custom domains with a CNAME record, which only works on a subdomain like `www`. Replace `<username>` below with your PythonAnywhere username.
+
+### First-time setup
+
+1. **Get the code** — in a PythonAnywhere *Bash console*:
+   ```bash
+   git clone https://github.com/YusufA0906/Portfolio.git
+   cd Portfolio
+   mkvirtualenv --python=python3.13 portfolio
+   pip install -r requirements.txt
+   ```
+   If the repository is private, GitHub will ask for a username and a personal access token instead of a password.
+2. **Create `yp/.env`** on the server (never commit it):
+   ```bash
+   cp yp/.env.example yp/.env
+   python -c "from django.core.management.utils import get_random_secret_key as k; print(k())"
+   nano yp/.env      # paste the key into DJANGO_SECRET_KEY; leave DJANGO_DEBUG unset
+   ```
+3. **Set up the database, files and an admin login:**
+   ```bash
+   python yp/manage.py migrate
+   python yp/manage.py collectstatic --noinput
+   python yp/manage.py createsuperuser
+   ```
+4. **Web tab → Add a new web app** → domain `www.yusufali.dev` → **Manual configuration** → **Python 3.13**. Then on that web app's page:
+   - **Virtualenv:** `/home/<username>/.virtualenvs/portfolio`
+   - **WSGI configuration file:** replace its contents with
+     ```python
+     import os
+     import sys
+
+     path = "/home/<username>/Portfolio/yp"
+     if path not in sys.path:
+         sys.path.insert(0, path)
+
+     os.environ["DJANGO_SETTINGS_MODULE"] = "portfolio.settings"
+
+     from django.core.wsgi import get_wsgi_application
+     application = get_wsgi_application()
+     ```
+   - **Static files:** add two mappings
+     | URL | Directory |
+     | --- | --- |
+     | `/static/` | `/home/<username>/Portfolio/yp/staticfiles` |
+     | `/media/` | `/home/<username>/Portfolio/yp/media` |
+   - Click **Reload**.
+5. **DNS at Namecheap** — Domain List → yusufali.dev → **Advanced DNS** → add a **CNAME Record**: host `www`, value = the `webapp-XXXX.pythonanywhere.com` address shown on the Web tab. Remove any parking-page records for `www`. DNS can take up to a few hours to update.
+6. **HTTPS** — once the Web tab shows the domain working, set up the free **Let's Encrypt** certificate in the web app's *Security* section, then turn on **Force HTTPS**. `.dev` domains only load over HTTPS, so the site won't open in a browser until this is done.
+
+### Updating the live site
+
+After pushing changes to GitHub, in a PythonAnywhere Bash console:
+
+```bash
+cd ~/Portfolio
+git pull
+workon portfolio
+pip install -r requirements.txt
+python yp/manage.py migrate
+python yp/manage.py collectstatic --noinput
+```
+
+Then click **Reload** on the Web tab. Blog posts, projects and uploaded images live only on the server (`db.sqlite3`, `yp/media/`), so edit them in the live site's `/admin`. Use the PythonAnywhere **Files** tab to download `db.sqlite3` and `media/` occasionally as a backup.
+
+## Projects
+
+Projects are stored in the database and managed in the Django admin under **Projects** (see the Blog section for creating an admin login).
+
+- **Category** (Finance & Tax, or Automation & IT) groups the project on the home page and drives the filter on `/projects`. The filter state is kept in the URL, e.g. `/projects?category=finance`.
+- **Order** sets the display order (lower first); you can edit it straight from the list view.
+- **Link** is optional. The "View Live Demo" / "View project" button only appears when it is set.
+- Uploaded images are saved to `yp/media/projects/` (git-ignored, like `db.sqlite3`). The 8 starting projects are created by migration `0004_seed_projects`.
+
+## Blog
+
+Posts live in the database and are written in the Django admin.
+
+1. Create an admin login once: `python yp/manage.py createsuperuser`.
+2. Run the server and open `/admin`, then **Posts → Add post**.
+3. Give the post a title; the slug fills in automatically. Separate paragraphs in the body with a blank line.
+
+Published posts appear at `/blog`, newest first, and each one has its own page at `/blog/<slug>`. Untick **Is published** to hide a post without deleting it. A sample post ("Welcome to the blog") is added by migration `0002_sample_post`; edit or delete it in the admin.
+
+## Background
+
+The home page draws one fixed, full-screen WebGL canvas (`#webgl`) behind the regular HTML content. It shows a single soft, barely-there glow in the accent colour on the warm charcoal background. As you scroll, the glow swings from side to side, section by section. A static film-grain overlay (CSS, in `animations.css`) sits over the whole page. There are no 3D objects, textures or post-processing. All content stays real, semantic HTML, and the canvas is decorative (`aria-hidden`).
 
 Dependencies load from jsDelivr as ES modules through the import map in `yp/templates/components/head.html`: Three.js, GSAP + ScrollTrigger and Lenis. There is no build step.
-
-### Design concepts
-
-Four interchangeable designs share the same runner:
-
-| Concept | Look |
-| --- | --- |
-| `engine` (default) | "The Data Engine": a glowing core and ledger-cell particles that snap into a grid, then glass panels, bar charts, project cards and medals. Dark cyan/emerald theme. |
-| `city` | "Ledger City": a low-poly city of bar-chart skyscrapers. Dusk turns to night as you scroll, windows light up by district, and there is traffic on the boulevard. |
-| `glass` | "Liquid Glass": a light, minimal theme. One iridescent glass form morphs per section (sphere → cube → coin → capsule → twist → gem) over a pastel gradient. |
-| `terminal` | "Retro Terminal": a CRT on a desk with your photo on screen. Scrolling dives through the glass into a green wireframe cyberspace. Monospace, scanline theme. |
-
-**Switching:** pick a concept with the pill at the bottom left of the home page, or with `?concept=<name>`. The choice is remembered in `localStorage` and applies to every page. To make one permanent:
-1. Set `DEFAULT_CONCEPT` in `utils.js` and the same default in the inline script in `components/head.html`.
-2. Remove the `.concept-switcher` markup from `index.html`.
-3. Delete the unused concept modules and their CSS blocks in `concepts.css`.
 
 ### Files (`yp/core/static/js/three/`)
 
 | File | What it does |
 | --- | --- |
-| `main.js` | Generic runner. Loads the active concept, maps scroll position → station progress, and runs the loader/intro, render loop, pointer, card clicks, resize and visibility handling. |
-| `scene.js` | Renderer, camera, environment lighting, and optional bloom/fog/tone mapping (configured by each concept's `theme`). |
-| `shared.js` | Camera path, hero photo framing, project-card picking, project textures. |
-| `concepts/*.js` | One module per design. Each exports `theme` and `create(ctx)`, which returns `{ stations, update, … }` (see the top of `main.js`). |
-| `hero.js`, `sections.js` | Set pieces used by the `engine` concept. |
+| `main.js` | Maps scroll position to section progress, and runs the render loop, pointer, resize and visibility handling. |
+| `aurora.js` | The full-screen quad and fragment shader that draw the glow. |
+| `scene.js` | The WebGL renderer, drawn below CSS resolution. |
 | `interactions.js` | Lenis smooth scroll, custom cursor, magnetic buttons. |
-| `utils.js` | `CONFIG` tunables, concept selection, device capability flags, math helpers, GLSL noise. |
-
-Concept-specific HTML styling lives in `yp/static/css/concepts.css`, scoped under `html.concept-<name>`.
+| `utils.js` | `CONFIG` tunables, device capability flags, math helpers, GLSL noise. |
 
 ### Tuning
 
-- **Particle count, default colours, bloom, pixel-ratio cap, scroll smoothing:** edit `CONFIG` in `utils.js`.
-- **Camera stations:** edit `STATIONS` in the concept module. Each entry has a `camera` position and a `target` to look at. The order must match the `data-station` attributes in `index.html`: hero, about, experience, skills, showcase, certificates, contact.
-- **Section scroll mapping:** a station is reached exactly when its section is centred in the viewport.
+Edit `CONFIG` in `utils.js`:
+- `colors`: the background and the accent. Keep these in sync with `--bg` and `--accent` in `style.css`.
+- `aurora.intensity`: how strong the glow is (0-1).
+- `aurora.speed`: how fast it drifts.
+- `aurora.scrollShift`: how far it swings per section.
+- `aurora.pointerStrength`: pointer parallax.
+- `aurora.resolutionScale`: render size relative to the screen.
+- `scrollDamping`: how quickly the background catches up with scrolling.
+
+Section progress is driven by the `data-station` attributes in `index.html` (hero, about, experience, skills, showcase, certificates, contact). A section's value is reached when it is centred in the viewport.
 
 ### Adaptive behaviour
 
-- **Phones (<768px):** lighter scenes (fewer particles, buildings and glyphs), no bloom, no glass transmission and no custom cursor. Per-section cross-fades replace the camera flight.
-- **`prefers-reduced-motion`:** a single static frame, with no scroll camera, smooth scrolling or cursor. Add `?motion` to the URL to force the full experience while testing.
-- **No WebGL (or a CDN failure):** the canvas is hidden and the concept's CSS theme stands on its own.
+- **Phones (<768px):** the same background, which is cheap enough everywhere. No custom cursor.
+- **`prefers-reduced-motion`:** no drift, smooth scrolling or cursor. The background redraws on scroll, so the colours still follow the page. Add `?motion` to the URL to force the full experience while testing.
+- **No WebGL (or a CDN failure):** the canvas is hidden and a static CSS version of the glow takes its place.

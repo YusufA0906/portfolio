@@ -5,7 +5,7 @@
 
 {% block head_extra %}
 <script>
-    // Decide before first paint whether the 3D intro loader should show.
+    // Decide before first paint whether the WebGL background runs and the hero waits for it.
     (function () {
         var d = document.documentElement;
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
@@ -18,7 +18,7 @@
         d.classList.add(gl ? 'has-webgl' : 'no-webgl');
         if (gl && !reduce) {
             d.classList.add('is-loading');
-            // Safety net: never trap the page behind the loader if a CDN module fails.
+            // Safety net: never keep the hero hidden if a CDN module fails.
             setTimeout(function () { d.classList.remove('is-loading'); }, 6000);
         }
     })();
@@ -28,23 +28,7 @@
 {% block scene %}
 <canvas id="webgl" aria-hidden="true"></canvas>
 
-<div class="loader" aria-hidden="true">
-    <div class="loader__inner">
-        <span class="loader__label">Initializing data engine</span>
-        <span class="loader__count"><span id="loader-count">0</span>%</span>
-        <span class="loader__bar"><span id="loader-bar"></span></span>
-    </div>
-</div>
-
 <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
-
-<!-- Temporary: compare design concepts -->
-<div class="concept-switcher" role="group" aria-label="Design concept">
-    <button type="button" data-concept="engine">Engine</button>
-    <button type="button" data-concept="city">City</button>
-    <button type="button" data-concept="glass">Glass</button>
-    <button type="button" data-concept="terminal">Terminal</button>
-</div>
 {% endblock %}
 
 {% block content %}
@@ -67,17 +51,10 @@
         </p>
 
         <div class="btn-container">
-            <button class="btn btn--secondary" onclick="location.href='#contact'">
-                Work With Me
-            </button>
-            <button class="btn" onclick="location.href='https://github.com/YusufA0906'">
+            <a class="btn btn--secondary" href="#contact">Work With Me</a>
+            <a class="btn" href="https://github.com/YusufA0906" target="_blank" rel="noopener">
                 <i class="ri-github-fill"></i> My Github
-            </button>
-        </div>
-
-        <div id="socials-container">
-            <i class="ri-youtube-line icon" onclick="location.href='#'"></i>
-            <i class="ri-linkedin-box-line icon" onclick="location.href='#'"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -86,28 +63,28 @@
     <p class="section__text__p1" data-reveal>Get To Know More</p>
     <h1 class="title" data-reveal>About Me</h1>
 
-    <div class="section-container">
-
-        <div class="about-details-container">
-            <div class="about-containers" data-stagger>
-                <div class="details-container" data-reveal>
-                    <i class="ri-medal-line icon"></i>
-                    <h3>Focus</h3>
-                    <p>Python Automation <br />& IT Infrastructure</p>
-                </div>
-                <div class="details-container" data-reveal>
-                    <i class="ri-graduation-cap-line icon"></i>
-                    <h3>Education</h3>
-                    <p>B.Sc. in Computer Science<br />Sheridan College (In Progress)</p>
-                </div>
-            </div>
-
-            <div class="text-container" data-reveal>
-                <p>
-                    I am a proactive and detail-oriented Operations & Financial Technologist. I specialize in bridging the gap between complex IT infrastructure and financial compliance. By automating back-office workflows with Python and managing cloud ecosystems, I design secure financial structures so you can focus on growing your business with complete peace of mind.
-                </p>
-            </div>
+    <div class="about-grid">
+        <div class="about-bio" data-reveal="left">
+            <p class="about-lead">I bridge the gap between complex IT infrastructure and financial compliance.</p>
+            <p>
+                I'm a proactive, detail-oriented Operations &amp; Financial Technologist. By automating back-office workflows with Python and managing cloud ecosystems, I design secure financial structures so you can focus on growing your business with complete peace of mind.
+            </p>
         </div>
+
+        <dl class="about-facts" data-reveal="right">
+            <div>
+                <dt>Focus</dt>
+                <dd>Python automation &amp; IT infrastructure</dd>
+            </div>
+            <div>
+                <dt>Education</dt>
+                <dd>B.Sc. Computer Science, Sheridan College (in progress)</dd>
+            </div>
+            <div>
+                <dt>Toolkit</dt>
+                <dd>Python · QuickBooks · CRA compliance · Cloud</dd>
+            </div>
+        </dl>
     </div>
 
 </section>
@@ -115,143 +92,46 @@
 <section id="experience" class="experience-section" data-station="experience">
     <p class="section__text__p1" data-reveal>Explore My</p>
     <h1 class="title" data-reveal>Experience</h1>
-    <div class="experience-details-container">
-        <div class="about-containers" data-stagger>
-
-            <div class="details-container" data-reveal>
-                <h2 class="experience-sub-title">Web & Databases</h2>
-                <div class="article-container">
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>HTML</h3>
-                            <p>Experienced</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>CSS</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>PostgreSQL</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-
-            <div class="details-container" data-reveal>
-                <h2 class="experience-sub-title">IT & Automation</h2>
-                <div class="article-container">
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>Python</h3>
-                            <p>Experienced</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>Scripting</h3>
-                            <p>Experienced</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>Hardware</h3>
-                            <p>Intermediate</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>APIs</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-
-            <div class="details-container" data-reveal>
-                <h2 class="experience-sub-title">Finance & Tax</h2>
-                <div class="article-container">
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>QuickBooks</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>CRA Rules</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>Payroll</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                    <article>
-                        <i class="ri-checkbox-circle-fill icon"></i>
-                        <div>
-                            <h3>Ledgers</h3>
-                            <p>Basic</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
+    <dl class="experience-list" data-stagger>
+        <div class="experience-row" data-reveal>
+            <dt>Web &amp; Databases</dt>
+            <dd><ul><li>HTML</li><li>CSS</li><li>PostgreSQL</li></ul></dd>
         </div>
-    </div>
+        <div class="experience-row" data-reveal>
+            <dt>IT &amp; Automation</dt>
+            <dd><ul><li>Python</li><li>Scripting</li><li>Hardware</li><li>APIs</li></ul></dd>
+        </div>
+        <div class="experience-row" data-reveal>
+            <dt>Finance &amp; Tax</dt>
+            <dd><ul><li>QuickBooks</li><li>CRA Rules</li><li>Payroll</li><li>Ledgers</li></ul></dd>
+        </div>
+    </dl>
 </section>
 
     <section class="skills" data-station="skills">
 
         <div class="skills__desc" data-reveal="left">
-            <h3>Experienced Across Multiple Projects and Technologies</h3>
-            <p>Bringing creativity and technical proficiency to building responsive web applications and enhancing user
-                experiences.</p>
+            <h3>What I Do</h3>
+            <p>Practical systems for small businesses &mdash; less manual work, cleaner books, and infrastructure you don't have to think about.</p>
         </div>
 
-        <div class="skills__stats" data-reveal="right">
-
-            <i class="ri-codepen-line"></i>
-
-            <div class="skill__info">
-                <h5 data-count="100" data-suffix="%">100%</h5>
-                <p>CRA & IT Compliance</p>
+        <div class="skills__list" data-reveal="right">
+            <div class="skill">
+                <h5>Automate</h5>
+                <p>Python scripts for invoicing, reporting and data entry.</p>
             </div>
-
-            <i class="ri-reactjs-line"></i>
-            <div class="skill__info">
-                <h5 data-count="10" data-suffix="k+">10k+</h5>
-                <p>Lines of Code Written</p>
+            <div class="skill">
+                <h5>Reconcile</h5>
+                <p>QuickBooks ledgers, payroll and CRA-ready records.</p>
             </div>
-
-            <div class="skill__info">
-                <h5>Certified</h5>
-                <p>CompTIA A+ & QuickBooks</p>
+            <div class="skill">
+                <h5>Secure</h5>
+                <p>Small-business networks and hardware.</p>
             </div>
-
-            <i class="ri-rocket-line"></i>
-
-            <div class="skill__info">
-                <h5>24/7</h5>
-                <p>Automated Systems</p>
+            <div class="skill">
+                <h5>Integrate</h5>
+                <p>APIs that connect your apps so data moves on its own.</p>
             </div>
-
-            <i class="ri-remote-control-line"></i>
         </div>
 
     </section>
@@ -260,7 +140,7 @@
 
         <div class="showcase__header" data-reveal>
             <h3>I Can Help You With:</h3>
-            <button class="btn" onclick="location.href='{% url 'projects' %}'">See My Work</button>
+            <a class="btn" href="{% url 'projects' %}">See My Work</a>
         </div>
 
         <div class="showcase_categories">
@@ -277,61 +157,25 @@
                     <div class="category__desc">
                         <p>Accurately managing your corporate ledgers, implementing seamless cloud accounting ecosystems, and optimizing Canadian tax strategies to ensure strict CRA compliance.
                             I design secure financial structures so you can focus on growing your business with complete peace of mind.</p>
-                        <a href="#"><i class="ri-share-circle-line"></i></a>
+                        <a href="{% url 'projects' %}?category=finance" aria-label="See Finance &amp; Tax projects"><i class="ri-share-circle-line"></i></a>
                     </div>
 
                 </div>
 
                 <div class="category__projects" data-stagger>
+                    {% for p in finance %}
                     <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-1.png' %}" alt="Portfolio 1" class="project-card__image">
+                        <img src="{{ p.image.url }}" alt="{{ p.title }}" class="project-card__image">
 
                         <div class="project-card__info">
-                            <h5>Canadian Tax Compliance</h5>
-                            <p>August 2023</p>
+                            <h5>{{ p.title }}</h5>
+                            <p>{{ p.date|date:"F Y" }}</p>
                         </div>
 
-                        <p class="project-card__desc">Personal & Corporate tax preparation, CRA alignment, and planning.</p>
-                        <button class="btn">View Live Demo</button>
-
+                        <p class="project-card__desc">{{ p.description }}</p>
+                        {% if p.link %}<a class="btn" href="{{ p.link }}" target="_blank" rel="noopener">View Live Demo</a>{% endif %}
                     </div>
-
-                    <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-2.png' %}" alt="Portfolio 2" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Cloud Bookkeeping Setup</h5>
-                            <p>August 2023</p>
-                        </div>
-                        <p class="project-card__desc">Setting up and managing QuickBooks/Xero, payroll, and monthly financial reporting.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-
-                    <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-3.jpg' %}" alt="Portfolio 3" class="project-card__image">
-
-                        <div class="project-card__info">
-                            <h5>Custom Financial Dashboards</h5>
-                            <p>August 2023</p>
-                        </div>
-
-                        <p class="project-card__desc">Web development meets finance: creating internal web tools for businesses to track their revenue and KPIs.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-
-
-                    <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-4.png' %}" alt="Portfolio 4" class="project-card__image">
-
-                        <div class="project-card__info">
-                            <h5>Corporate Payroll Integration or Financial Forecasting Models</h5>
-                            <p>August 2023</p>
-                        </div>
-
-                        <p class="project-card__desc">Configuring automated payroll schedules, managing employee tax deductions,
-                            and ensuring seamless synchronization with your core accounting ledger</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-
+                    {% endfor %}
                 </div>
 
             </section>
@@ -349,62 +193,25 @@
                         <p>Eliminating repetitive manual data entry through custom Python scripting, securing local business networks, and deploying
                             tailored software tools to scale your operational efficiency. From foundational hardware
                             setups to automated workflows, I build the robust technical framework your business relies on.</p>
-                        <a href="#"><i class="ri-share-circle-line"></i></a>
+                        <a href="{% url 'projects' %}?category=automation" aria-label="See Automation &amp; IT projects"><i class="ri-share-circle-line"></i></a>
                     </div>
 
                 </div>
 
                 <div class="category__projects" data-stagger>
-
+                    {% for p in automation %}
                     <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-5.png' %}" alt="NFT Landing" class="project-card__image">
+                        <img src="{{ p.image.url }}" alt="{{ p.title }}" class="project-card__image">
 
                         <div class="project-card__info">
-                            <h5>Python Workflow Automation</h5>
-                            <p>August 2023</p>
+                            <h5>{{ p.title }}</h5>
+                            <p>{{ p.date|date:"F Y" }}</p>
                         </div>
 
-                        <p class="project-card__desc">Eliminating data entry by connecting apps, automated invoicing scripts, and data scraping.</p>
-                        <button class="btn">View Live Demo</button>
+                        <p class="project-card__desc">{{ p.description }}</p>
+                        {% if p.link %}<a class="btn" href="{{ p.link }}" target="_blank" rel="noopener">View Live Demo</a>{% endif %}
                     </div>
-
-                    <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-6.png' %}" alt="Music Platform" class="project-card__image">
-
-                        <div class="project-card__info">
-                            <h5>Managed IT Infrastructure</h5>
-                            <p>August 2023</p>
-                        </div>
-
-                        <p class="project-card__desc">CompTIA A+ standard hardware setup, network security, data backups, and troubleshooting for small offices.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-
-                    <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-7.png' %}" alt="Crypto Market" class="project-card__image">
-
-                        <div class="project-card__info">
-                            <h5>Business Web Applications</h5>
-                            <p>August 2023</p>
-                        </div>
-
-                        <p class="project-card__desc">Building functional, secure internal websites or customer portals to streamline operations.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-
-                    <div class="project-card" data-reveal>
-                        <img src="{% static 'assets/item-8.png' %}" alt="Jobs Platform" class="project-card__image">
-
-                        <div class="project-card__info">
-                            <h5>Custom API Integrations</h5>
-                            <p>August 2023</p>
-                        </div>
-
-                        <p class="project-card__desc">Writing secure scripts to make your isolated software applications communicate,
-                            sync data automatically, and completely eliminate manual data transfers.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-
+                    {% endfor %}
                 </div>
 
             </section>
@@ -479,7 +286,6 @@
                     </div>
                 </div>
 
-                <a href="#"><i class="ri-external-link-line"></i></a>
             </div>
 
         </div>
@@ -487,25 +293,28 @@
     </section>
 
     <section id="contact" class="contact" data-station="contact">
-       <h2 data-reveal>Let's Work Together!</h2>
-
-        <div class="items" data-stagger>
-            <div class="item" data-reveal>
-                <a href="mailto:yusuf_ali0906@hotmail.com">Inquiries & Consulting</a>
-                <p>Drop a line to discuss workflow automation or financial accounting integrations.</p>
-                <a href="mailto:yusuf_ali0906@hotmail.com">
-                    <button class="btn btn--secondary">Send Email</button>
-                </a>
-
+        <div class="contact__grid">
+            <div class="contact__intro" data-reveal="left">
+                <h2>Have a project in mind? <em>Let's talk.</em></h2>
+                <p>I help small businesses automate their back office and keep their books CRA-ready.</p>
             </div>
 
-            <div class="item" data-reveal>
-                <a href="tel:+16474060209">Direct Phone Line</a>
-                <p>Speak live to review server security parameters or Canadian tax frameworks.</p>
-                <button class="btn btn--secondary" onclick="location.href='tel:+16474060209'">Call Now</button>
-            </div>
+            <dl class="contact__lines" data-reveal="right">
+                <div class="contact__line">
+                    <dt>Email</dt>
+                    <dd>
+                        <a href="mailto:yusuf_ali0906@hotmail.com">yusuf_ali0906@hotmail.com <i class="ri-arrow-right-up-line" aria-hidden="true"></i></a>
+                        <button type="button" class="contact__copy" data-copy="yusuf_ali0906@hotmail.com">Copy</button>
+                    </dd>
+                </div>
+                <div class="contact__line">
+                    <dt>Phone</dt>
+                    <dd>
+                        <a href="tel:+16474060209">+1 (647) 406-0209 <i class="ri-arrow-right-up-line" aria-hidden="true"></i></a>
+                    </dd>
+                </div>
+            </dl>
         </div>
-
     </section>
 
     <footer class="footer">

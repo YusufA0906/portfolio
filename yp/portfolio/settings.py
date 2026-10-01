@@ -10,29 +10,45 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Settings that differ between your machine and the live server come from
+# environment variables, loaded from yp/.env (git-ignored; see .env.example).
+load_dotenv(BASE_DIR / ".env")
+
+
+def env_list(name, default=""):
+    return [item.strip() for item in os.environ.get(name, default).split(",") if item.strip()]
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0$ae!q9^l@blz!q$3%35t#(8cs!mgytf2btj^sref@(16##=di'
+# Debug is off unless DJANGO_DEBUG=1 is set, so a missing .env can never
+# expose debug pages on the live site.
+DEBUG = os.environ.get("DJANGO_DEBUG") == "1"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured("Set DJANGO_SECRET_KEY in yp/.env (see .env.example).")
+    SECRET_KEY = "django-insecure-local-development-only"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
+CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'core.apps.CoreConfig',
-    'django_tailwind_cli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,3 +136,25 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+# `manage.py collectstatic` gathers everything here for the web server to serve
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Uploaded files (project images from the admin)
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
+
+# Production security (HTTPS everywhere; .dev domains require it anyway)
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 365
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "same-origin"
+
+# W008: PythonAnywhere's "Force HTTPS" toggle redirects to HTTPS before
+#       requests reach Django, so SECURE_SSL_REDIRECT stays off.
+# W021: the whole .dev TLD is already on browsers' HSTS preload list.
+SILENCED_SYSTEM_CHECKS = ["security.W008", "security.W021"]

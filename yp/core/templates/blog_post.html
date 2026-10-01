@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Yusuf Ali{% endblock %}
+
+{% block content %}
+
+<nav>
+    {% include 'components/navbar.html' %}
+</nav>
+
+<main class="post">
+    <a class="post-back" href="{% url 'blog' %}">← All posts</a>
+    <p class="blog-meta">{{ post.published_at|date:"j M Y" }} · {{ post.reading_minutes }} min read</p>
+    <h1>{{ post.title }}</h1>
+    <div class="post-body">
+        {{ post.body|linebreaks }}
+    </div>
+</main>
+
+<footer class="footer">
+    {% include 'components/footer.html' %}
+</footer>
+
+{% endblock %}

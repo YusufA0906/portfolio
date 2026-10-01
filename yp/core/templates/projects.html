@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block title %}Yusuf Ali - Projects{% endblock %}
 
@@ -10,61 +9,37 @@
 </nav>
 
 <section class="works-section">
-    <h1 data-reveal>Works</h1>
+    <h1 data-reveal>Projects</h1>
+
+    <div class="project-filter" role="group" aria-label="Filter projects by category" data-reveal>
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        {% for key, label in categories %}
+        <button type="button" data-filter="{{ key }}" aria-pressed="false">{{ label }}</button>
+        {% endfor %}
+        <p class="project-count" aria-live="polite">{{ projects|length }} project{{ projects|length|pluralize }}</p>
+    </div>
 
     <div class="projects-list">
-
-    <!-- Project 1 -->
-    <div class="project-item" data-reveal>
-        <div class="project-img-wrapper">
-            <img src="{% static 'assets/item-5.png' %}" alt="Capture Screenshots">
-        </div>
-        <div class="project-info">
-            <h2>Capture Screenshots</h2>
-            <div class="project-meta">
-                <span class="project-year">2023</span>
-                <span class="project-category">JavaScript</span>
+        {% for p in projects %}
+        <div class="project-item" data-category="{{ p.category }}" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="{{ p.image.url }}" alt="{{ p.title }}">
             </div>
-            <p class="project-description">
-                Eliminating data entry by connecting apps, automated invoicing scripts, and data scraping built to streamline recurring operating reports.
-            </p>
-        </div>
-    </div>
-
-    <!-- Project 2 -->
-    <div class="project-item" data-reveal>
-        <div class="project-img-wrapper">
-            <img src="{% static 'assets/item-6.png' %}" alt="Designing Login Form">
-        </div>
-        <div class="project-info">
-            <h2>Designing Login Form</h2>
-            <div class="project-meta">
-                <span class="project-year">2023</span>
-                <span class="project-category">Login Design</span>
+            <div class="project-info">
+                <h2>{{ p.title }}</h2>
+                <div class="project-meta">
+                    <span class="project-year">{{ p.date|date:"Y" }}</span>
+                    <span class="project-category">{{ p.get_category_display }}</span>
+                </div>
+                <p class="project-description">{{ p.description }}</p>
+                {% if p.link %}
+                <a class="project-link" href="{{ p.link }}" target="_blank" rel="noopener">View project <i class="ri-arrow-right-up-line" aria-hidden="true"></i></a>
+                {% endif %}
             </div>
-            <p class="project-description">
-                Building clean, secure internal client portal credentials interfaces with unified brand layout validation constraints.
-            </p>
         </div>
-    </div>
-
-    <!-- Project 3 -->
-    <div class="project-item" data-reveal>
-        <div class="project-img-wrapper">
-            <img src="{% static 'assets/item-3.jpg' %}" alt="Music Platform UI">
-        </div>
-        <div class="project-info">
-            <h2>Music Platform UI</h2>
-            <div class="project-meta">
-                <span class="project-year">2024</span>
-                <span class="project-category">UI Design</span>
-            </div>
-            <p class="project-description">
-                Web development meets core UI optimization: creating internal clean design tools for businesses to track engagement metrics.
-            </p>
-        </div>
-    </div>
-
+        {% empty %}
+        <p class="project-empty">No projects yet.</p>
+        {% endfor %}
     </div>
 </section>
 

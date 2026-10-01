@@ -1,11 +1,12 @@
 <div class="footer__brand">
-    <a href="#">Logo.</a>
+    <a href="{% url 'index' %}">Yusuf Ali</a>
     <p>© 2026 Yusuf Ali.</p>
 </div>
 
 <div class="footer__links">
-    <a href="#">Home</a>
-    <a href="#">Projects</a>
-    <a href="#">Skills</a>
-    <a href="#">About</a>
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'index' %}#about">About</a>
+    <a href="{% url 'index' %}#experience">Experience</a>
+    <a href="{% url 'projects' %}">Projects</a>
+    <a href="{% url 'blog' %}">Blog</a>
 </div>

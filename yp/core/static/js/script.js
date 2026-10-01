@@ -1,5 +1,5 @@
-// Portfolio interactions: scroll reveals, typing effect, counters, card tilt,
-// navbar state, scroll progress and back-to-top.
+// Portfolio interactions: scroll reveals, typing effect, card tilt,
+// navbar state, scroll progress, back-to-top, project filter and copy email.
 document.documentElement.classList.add('js');
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -86,40 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // ---- Count-up stats --------------------------------------------------
-    const counterObserver = new IntersectionObserver(function (entries, observer) {
-        entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            observer.unobserve(entry.target);
-
-            const el = entry.target;
-            const target = parseInt(el.dataset.count, 10);
-            const suffix = el.dataset.suffix || '';
-
-            if (reduceMotion || isNaN(target)) {
-                el.textContent = (isNaN(target) ? '' : target) + suffix;
-                return;
-            }
-
-            const duration = 1400;
-            let start = null;
-
-            function step(timestamp) {
-                if (start === null) start = timestamp;
-                const t = Math.min((timestamp - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-                el.textContent = Math.round(eased * target) + suffix;
-                if (t < 1) requestAnimationFrame(step);
-            }
-
-            requestAnimationFrame(step);
-        });
-    }, { threshold: 0.6 });
-
-    document.querySelectorAll('[data-count]').forEach(function (el) {
-        counterObserver.observe(el);
-    });
-
     // ---- Pause hero animations while it is scrolled out of view ---------
     const hero = document.getElementById('profile');
     if (hero) {
@@ -130,9 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }).observe(hero);
     }
 
-    // ---- Subtle 3D tilt on glass cards ------------------------------------
+    // ---- Subtle 3D tilt on project cards ----------------------------------
     if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-        document.querySelectorAll('.project-card, .details-container').forEach(function (card) {
+        document.querySelectorAll('.project-card').forEach(function (card) {
             card.addEventListener('mousemove', function (e) {
                 const rect = card.getBoundingClientRect();
                 const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -145,4 +111,66 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
+    // ---- Project category filter (projects page) -----------------------------
+    const filter = document.querySelector('.project-filter');
+    if (filter) {
+        const buttons = filter.querySelectorAll('[data-filter]');
+        const items = document.querySelectorAll('.project-item[data-category]');
+        const count = filter.querySelector('.project-count');
+
+        function applyFilter(category) {
+            if (!filter.querySelector('[data-filter="' + category + '"]')) category = 'all';
+            const visible = [];
+            buttons.forEach(function (btn) {
+                btn.setAttribute('aria-pressed', btn.dataset.filter === category);
+            });
+            items.forEach(function (item) {
+                const match = category === 'all' || item.dataset.category === category;
+                item.hidden = !match;
+                item.classList.remove('is-first', 'is-last');
+                // Re-shown items skip the scroll reveal so they never stay invisible
+                if (match) {
+                    item.classList.add('revealed');
+                    visible.push(item);
+                }
+            });
+            const shown = visible.length;
+            if (shown) {
+                visible[0].classList.add('is-first');
+                visible[shown - 1].classList.add('is-last');
+            }
+            if (count) count.textContent = shown + (shown === 1 ? ' project' : ' projects');
+
+            const url = new URL(window.location.href);
+            if (category === 'all') url.searchParams.delete('category');
+            else url.searchParams.set('category', category);
+            history.replaceState(null, '', url);
+        }
+
+        buttons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                applyFilter(btn.dataset.filter);
+            });
+        });
+
+        const initial = new URLSearchParams(window.location.search).get('category');
+        if (initial) applyFilter(initial);
+    }
+
+    // ---- Copy email (contact section) -----------------------------------------
+    document.querySelectorAll('.contact__copy').forEach(function (btn) {
+        if (!navigator.clipboard) {
+            btn.hidden = true; // the mailto link still works
+            return;
+        }
+        let timer = null;
+        btn.addEventListener('click', function () {
+            navigator.clipboard.writeText(btn.dataset.copy).then(function () {
+                btn.textContent = 'Copied';
+                clearTimeout(timer);
+                timer = setTimeout(function () { btn.textContent = 'Copy'; }, 2000);
+            });
+        });
+    });
 });

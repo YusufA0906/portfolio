@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Yusuf Ali - Blog{% endblock %}
+
+{% block content %}
+
+<nav>
+    {% include 'components/navbar.html' %}
+</nav>
+
+<section class="blog-section">
+    <h1 data-reveal>Blog</h1>
+
+    <div class="blog-list">
+        {% for post in posts %}
+        <a class="blog-item" href="{{ post.get_absolute_url }}" data-reveal>
+            <p class="blog-meta">{{ post.published_at|date:"M Y" }} · {{ post.reading_minutes }} min read</p>
+            <h2>{{ post.title }}</h2>
+            {% if post.excerpt %}<p class="blog-excerpt">{{ post.excerpt }}</p>{% endif %}
+        </a>
+        {% empty %}
+        <p class="blog-empty">No posts yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<footer class="footer">
+    {% include 'components/footer.html' %}
+</footer>
+
+{% endblock %}
