@@ -1,6 +1,6 @@
 # Portfolio
 
-Django portfolio site for Yusuf Ali, live at https://www.yusufali.dev.
+Django portfolio site for Yusuf Ali, live at https://yusufali.dev.
 
 ## Local development
 
@@ -15,9 +15,30 @@ python yp/manage.py runserver
 
 Settings that differ between your machine and the live server (debug mode, secret key, allowed hosts) come from `yp/.env`, which is git-ignored. Debug is **off** unless `DJANGO_DEBUG=1` is set.
 
+## Deployment (GitHub Pages, free)
+
+The live site is a static copy in `docs/`, served free by GitHub Pages. Django only runs on your machine: you edit projects and posts in the local admin, then export.
+
+To update the live site:
+
+```bash
+python yp/manage.py build_static   # renders every page, CSS, JS and image into docs/
+git add docs
+git commit -m "Update site"
+git push
+```
+
+GitHub republishes within about a minute. `build_static` clears `docs/` each time but keeps the `CNAME` file, which holds the custom domain.
+
+**One-time setup (already done):**
+- GitHub repo → Settings → Pages: source *Deploy from a branch*, `main`, `/docs`; custom domain `yusufali.dev`; *Enforce HTTPS* ticked.
+- Namecheap → Advanced DNS: four `A` records for `@` (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) and a `CNAME` for `www` → `yusufa0906.github.io.`
+
 ## Deployment (PythonAnywhere + Namecheap)
 
-The site runs on a paid PythonAnywhere account at `www.yusufali.dev`. PythonAnywhere attaches custom domains with a CNAME record, which only works on a subdomain like `www`. Replace `<username>` below with your PythonAnywhere username.
+This was the original plan and isn't used now. It's kept for reference in case the site ever needs a live server (for example, a contact form that saves to the database).
+
+The site would run on a paid PythonAnywhere account at `www.yusufali.dev`. PythonAnywhere attaches custom domains with a CNAME record, which only works on a subdomain like `www`. Replace `<username>` below with your PythonAnywhere username.
 
 ### First-time setup
 

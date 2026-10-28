@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+   <head>
+        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11100e">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/project_style.css">
+<link rel="stylesheet" href="/static/css/animations.css">
+
+<!-- Remix Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+
+<!-- ES module dependencies for the 3D scene (no bundler) -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.mjs"
+    }
+}
+</script>
+
+<!-- Flag JS availability early so scroll-reveal elements are only hidden when JS will reveal them -->
+<script>
+    document.documentElement.classList.add('js');
+</script>
+<script src="/static/js/script.js" defer></script>
+
+        <title>Yusuf Ali - Blog</title>
+        
+   </head>
+
+    <body class="">
+        <div class="scroll-progress"></div>
+
+        
+
+        
+
+<nav>
+    
+<a class="logo" href="/">
+    <img src="/static/assets/logo.png" alt="">
+    <span>Yusuf Ali</span>
+</a>
+
+<div class="nav-links">
+    <a href="/projects">Projects</a>
+    <a href="/blog">Blog</a>
+</div>
+
+<a href="https://github.com/YusufA0906"><i class="ri-github-fill"></i> Github</a>
+
+</nav>
+
+<section class="blog-section">
+    <h1 data-reveal>Blog</h1>
+
+    <div class="blog-list">
+        
+        <a class="blog-item" href="/blog/welcome-to-the-blog" data-reveal>
+            <p class="blog-meta">Oct 2026 · 1 min read</p>
+            <h2>Welcome to the blog</h2>
+            <p class="blog-excerpt">A sample post — edit or delete it in the Django admin.</p>
+        </a>
+        
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer__brand">
+    <a href="/">Yusuf Ali</a>
+    <p>© 2026 Yusuf Ali.</p>
+</div>
+
+<div class="footer__links">
+    <a href="/">Home</a>
+    <a href="/#about">About</a>
+    <a href="/#experience">Experience</a>
+    <a href="/projects">Projects</a>
+    <a href="/blog">Blog</a>
+</div>
+
+</footer>
+
+
+
+        <button class="back-to-top" aria-label="Back to top">
+            <i class="ri-arrow-up-line"></i>
+        </button>
+
+        
+    </body>
+</html>

@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+   <head>
+        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11100e">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/project_style.css">
+<link rel="stylesheet" href="/static/css/animations.css">
+
+<!-- Remix Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+
+<!-- ES module dependencies for the 3D scene (no bundler) -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.mjs"
+    }
+}
+</script>
+
+<!-- Flag JS availability early so scroll-reveal elements are only hidden when JS will reveal them -->
+<script>
+    document.documentElement.classList.add('js');
+</script>
+<script src="/static/js/script.js" defer></script>
+
+        <title>Yusuf Ali - Projects</title>
+        
+   </head>
+
+    <body class="">
+        <div class="scroll-progress"></div>
+
+        
+
+        
+
+<nav>
+    
+<a class="logo" href="/">
+    <img src="/static/assets/logo.png" alt="">
+    <span>Yusuf Ali</span>
+</a>
+
+<div class="nav-links">
+    <a href="/projects">Projects</a>
+    <a href="/blog">Blog</a>
+</div>
+
+<a href="https://github.com/YusufA0906"><i class="ri-github-fill"></i> Github</a>
+
+</nav>
+
+<section class="works-section">
+    <h1 data-reveal>Projects</h1>
+
+    <div class="project-filter" role="group" aria-label="Filter projects by category" data-reveal>
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        
+        <button type="button" data-filter="finance" aria-pressed="false">Finance &amp; Tax</button>
+        
+        <button type="button" data-filter="automation" aria-pressed="false">Automation &amp; IT</button>
+        
+        <p class="project-count" aria-live="polite">8 projects</p>
+    </div>
+
+    <div class="projects-list">
+        
+        <div class="project-item" data-category="finance" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-1.png" alt="Canadian Tax Compliance">
+            </div>
+            <div class="project-info">
+                <h2>Canadian Tax Compliance</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Finance &amp; Tax</span>
+                </div>
+                <p class="project-description">Personal &amp; Corporate tax preparation, CRA alignment, and planning.</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="finance" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-2.png" alt="Cloud Bookkeeping Setup">
+            </div>
+            <div class="project-info">
+                <h2>Cloud Bookkeeping Setup</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Finance &amp; Tax</span>
+                </div>
+                <p class="project-description">Setting up and managing QuickBooks/Xero, payroll, and monthly financial reporting.</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="finance" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-3.jpg" alt="Custom Financial Dashboards">
+            </div>
+            <div class="project-info">
+                <h2>Custom Financial Dashboards</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Finance &amp; Tax</span>
+                </div>
+                <p class="project-description">Web development meets finance: creating internal web tools for businesses to track their revenue and KPIs.</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="finance" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-4.png" alt="Corporate Payroll Integration or Financial Forecasting Models">
+            </div>
+            <div class="project-info">
+                <h2>Corporate Payroll Integration or Financial Forecasting Models</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Finance &amp; Tax</span>
+                </div>
+                <p class="project-description">Configuring automated payroll schedules, managing employee tax deductions, and ensuring seamless synchronization with your core accounting ledger</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="automation" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-5.png" alt="Python Workflow Automation">
+            </div>
+            <div class="project-info">
+                <h2>Python Workflow Automation</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Automation &amp; IT</span>
+                </div>
+                <p class="project-description">Eliminating data entry by connecting apps, automated invoicing scripts, and data scraping.</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="automation" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-6.png" alt="Managed IT Infrastructure">
+            </div>
+            <div class="project-info">
+                <h2>Managed IT Infrastructure</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Automation &amp; IT</span>
+                </div>
+                <p class="project-description">CompTIA A+ standard hardware setup, network security, data backups, and troubleshooting for small offices.</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="automation" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-7.png" alt="Business Web Applications">
+            </div>
+            <div class="project-info">
+                <h2>Business Web Applications</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Automation &amp; IT</span>
+                </div>
+                <p class="project-description">Building functional, secure internal websites or customer portals to streamline operations.</p>
+                
+            </div>
+        </div>
+        
+        <div class="project-item" data-category="automation" data-reveal>
+            <div class="project-img-wrapper">
+                <img src="/media/projects/item-8.png" alt="Custom API Integrations">
+            </div>
+            <div class="project-info">
+                <h2>Custom API Integrations</h2>
+                <div class="project-meta">
+                    <span class="project-year">2023</span>
+                    <span class="project-category">Automation &amp; IT</span>
+                </div>
+                <p class="project-description">Writing secure scripts to make your isolated software applications communicate, sync data automatically, and completely eliminate manual data transfers.</p>
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer__brand">
+    <a href="/">Yusuf Ali</a>
+    <p>© 2026 Yusuf Ali.</p>
+</div>
+
+<div class="footer__links">
+    <a href="/">Home</a>
+    <a href="/#about">About</a>
+    <a href="/#experience">Experience</a>
+    <a href="/projects">Projects</a>
+    <a href="/blog">Blog</a>
+</div>
+
+</footer>
+
+
+
+        <button class="back-to-top" aria-label="Back to top">
+            <i class="ri-arrow-up-line"></i>
+        </button>
+
+        
+    </body>
+</html>

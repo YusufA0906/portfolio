@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+   <head>
+        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11100e">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/project_style.css">
+<link rel="stylesheet" href="/static/css/animations.css">
+
+<!-- Remix Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+
+<!-- ES module dependencies for the 3D scene (no bundler) -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.mjs"
+    }
+}
+</script>
+
+<!-- Flag JS availability early so scroll-reveal elements are only hidden when JS will reveal them -->
+<script>
+    document.documentElement.classList.add('js');
+</script>
+<script src="/static/js/script.js" defer></script>
+
+        <title> Yusuf Ali Portfolio </title>
+        
+<script>
+    // Decide before first paint whether the WebGL background runs and the hero waits for it.
+    (function () {
+        var d = document.documentElement;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            !/[?&]motion/.test(window.location.search);
+        var gl = false;
+        try {
+            var c = document.createElement('canvas');
+            gl = !!(window.WebGL2RenderingContext && c.getContext('webgl2')) || !!c.getContext('webgl');
+        } catch (e) {}
+        d.classList.add(gl ? 'has-webgl' : 'no-webgl');
+        if (gl && !reduce) {
+            d.classList.add('is-loading');
+            // Safety net: never keep the hero hidden if a CDN module fails.
+            setTimeout(function () { d.classList.remove('is-loading'); }, 6000);
+        }
+    })();
+</script>
+
+   </head>
+
+    <body class="">
+        <div class="scroll-progress"></div>
+
+        
+<canvas id="webgl" aria-hidden="true"></canvas>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+
+        
+
+<nav >
+    
+<a class="logo" href="/">
+    <img src="/static/assets/logo.png" alt="">
+    <span>Yusuf Ali</span>
+</a>
+
+<div class="nav-links">
+    <a href="/projects">Projects</a>
+    <a href="/blog">Blog</a>
+</div>
+
+<a href="https://github.com/YusufA0906"><i class="ri-github-fill"></i> Github</a>
+
+</nav>
+
+<section id="profile" data-station="hero">
+
+    <div class="section__pic-container" data-reveal="zoom">
+        <img src="/static/assets/profile.png" alt="Yusuf Ali profile picture" class="profile-pic" />
+    </div>
+
+    <div class="section__text" data-reveal>
+        <p class="section__text__p1">Hello, I'm</p>
+        <h1 class="title">Yusuf Ali</h1>
+        <p class="section__text__p2">
+            <span id="typed" data-phrases='["Operations &amp; Financial Technologist", "Python Automation Specialist", "IT Infrastructure &amp; Security", "Cloud Accounting &amp; Tax Compliance"]'></span><span class="typing-cursor"></span>
+        </p>
+
+        <div class="btn-container">
+            <a class="btn btn--secondary" href="#contact">Work With Me</a>
+            <a class="btn" href="https://github.com/YusufA0906" target="_blank" rel="noopener">
+                <i class="ri-github-fill"></i> My Github
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about-section" data-station="about">
+    <p class="section__text__p1" data-reveal>Get To Know More</p>
+    <h1 class="title" data-reveal>About Me</h1>
+
+    <div class="about-grid">
+        <div class="about-bio" data-reveal="left">
+            <p class="about-lead">I bridge the gap between complex IT infrastructure and financial compliance.</p>
+            <p>
+                I'm a proactive, detail-oriented Operations &amp; Financial Technologist. By automating back-office workflows with Python and managing cloud ecosystems, I design secure financial structures so you can focus on growing your business with complete peace of mind.
+            </p>
+        </div>
+
+        <dl class="about-facts" data-reveal="right">
+            <div>
+                <dt>Focus</dt>
+                <dd>Python automation &amp; IT infrastructure</dd>
+            </div>
+            <div>
+                <dt>Education</dt>
+                <dd>B.Sc. Computer Science, Sheridan College (in progress)</dd>
+            </div>
+            <div>
+                <dt>Toolkit</dt>
+                <dd>Python · QuickBooks · CRA compliance · Cloud</dd>
+            </div>
+        </dl>
+    </div>
+
+</section>
+
+<section id="experience" class="experience-section" data-station="experience">
+    <p class="section__text__p1" data-reveal>Explore My</p>
+    <h1 class="title" data-reveal>Experience</h1>
+    <dl class="experience-list" data-stagger>
+        <div class="experience-row" data-reveal>
+            <dt>Web &amp; Databases</dt>
+            <dd><ul><li>HTML</li><li>CSS</li><li>PostgreSQL</li></ul></dd>
+        </div>
+        <div class="experience-row" data-reveal>
+            <dt>IT &amp; Automation</dt>
+            <dd><ul><li>Python</li><li>Scripting</li><li>Hardware</li><li>APIs</li></ul></dd>
+        </div>
+        <div class="experience-row" data-reveal>
+            <dt>Finance &amp; Tax</dt>
+            <dd><ul><li>QuickBooks</li><li>CRA Rules</li><li>Payroll</li><li>Ledgers</li></ul></dd>
+        </div>
+    </dl>
+</section>
+
+    <section class="skills" data-station="skills">
+
+        <div class="skills__desc" data-reveal="left">
+            <h3>What I Do</h3>
+            <p>Practical systems for small businesses &mdash; less manual work, cleaner books, and infrastructure you don't have to think about.</p>
+        </div>
+
+        <div class="skills__list" data-reveal="right">
+            <div class="skill">
+                <h5>Automate</h5>
+                <p>Python scripts for invoicing, reporting and data entry.</p>
+            </div>
+            <div class="skill">
+                <h5>Reconcile</h5>
+                <p>QuickBooks ledgers, payroll and CRA-ready records.</p>
+            </div>
+            <div class="skill">
+                <h5>Secure</h5>
+                <p>Small-business networks and hardware.</p>
+            </div>
+            <div class="skill">
+                <h5>Integrate</h5>
+                <p>APIs that connect your apps so data moves on its own.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="work" class="showcase" data-station="showcase">
+
+        <div class="showcase__header" data-reveal>
+            <h3>I Can Help You With:</h3>
+            <a class="btn" href="/projects">See My Work</a>
+        </div>
+
+        <div class="showcase_categories">
+
+            <section class="category">
+
+                <div class="category__header" data-reveal>
+
+                    <div class="category__title">
+                        <i class="ri-macbook-line"></i>
+                        <h4>Financial & Tax Architecture</h4>
+                    </div>
+
+                    <div class="category__desc">
+                        <p>Accurately managing your corporate ledgers, implementing seamless cloud accounting ecosystems, and optimizing Canadian tax strategies to ensure strict CRA compliance.
+                            I design secure financial structures so you can focus on growing your business with complete peace of mind.</p>
+                        <a href="/projects?category=finance" aria-label="See Finance &amp; Tax projects"><i class="ri-share-circle-line"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="category__projects" data-stagger>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-1.png" alt="Canadian Tax Compliance" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Canadian Tax Compliance</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Personal &amp; Corporate tax preparation, CRA alignment, and planning.</p>
+                        
+                    </div>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-2.png" alt="Cloud Bookkeeping Setup" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Cloud Bookkeeping Setup</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Setting up and managing QuickBooks/Xero, payroll, and monthly financial reporting.</p>
+                        
+                    </div>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-3.jpg" alt="Custom Financial Dashboards" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Custom Financial Dashboards</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Web development meets finance: creating internal web tools for businesses to track their revenue and KPIs.</p>
+                        
+                    </div>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-4.png" alt="Corporate Payroll Integration or Financial Forecasting Models" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Corporate Payroll Integration or Financial Forecasting Models</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Configuring automated payroll schedules, managing employee tax deductions, and ensuring seamless synchronization with your core accounting ledger</p>
+                        
+                    </div>
+                    
+                </div>
+
+            </section>
+
+            <section class="category">
+
+                <div class="category__header" data-reveal>
+
+                    <div class="category__title">
+                        <i class="ri-group-2-line"></i>
+                        <h4>Automation & IT operations</h4>
+                    </div>
+
+                    <div class="category__desc">
+                        <p>Eliminating repetitive manual data entry through custom Python scripting, securing local business networks, and deploying
+                            tailored software tools to scale your operational efficiency. From foundational hardware
+                            setups to automated workflows, I build the robust technical framework your business relies on.</p>
+                        <a href="/projects?category=automation" aria-label="See Automation &amp; IT projects"><i class="ri-share-circle-line"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="category__projects" data-stagger>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-5.png" alt="Python Workflow Automation" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Python Workflow Automation</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Eliminating data entry by connecting apps, automated invoicing scripts, and data scraping.</p>
+                        
+                    </div>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-6.png" alt="Managed IT Infrastructure" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Managed IT Infrastructure</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">CompTIA A+ standard hardware setup, network security, data backups, and troubleshooting for small offices.</p>
+                        
+                    </div>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-7.png" alt="Business Web Applications" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Business Web Applications</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Building functional, secure internal websites or customer portals to streamline operations.</p>
+                        
+                    </div>
+                    
+                    <div class="project-card" data-reveal>
+                        <img src="/media/projects/item-8.png" alt="Custom API Integrations" class="project-card__image">
+
+                        <div class="project-card__info">
+                            <h5>Custom API Integrations</h5>
+                            <p>August 2023</p>
+                        </div>
+
+                        <p class="project-card__desc">Writing secure scripts to make your isolated software applications communicate, sync data automatically, and completely eliminate manual data transfers.</p>
+                        
+                    </div>
+                    
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+    <section class="career" data-station="certificates">
+        <div class="career__jobs" data-reveal="left">
+            <h3>Technical Expertise</h3>
+
+            <div class="job">
+                <i class="ri-terminal-window-line"></i>
+                <div class="job__info">
+                    <h5>Python & Automation Architecture</h5>
+                    <p>Focus on script writing, API integrations, data scraping, and workflow optimization.</p>
+                </div>
+            </div>
+
+            <div class="job">
+                <i class="ri-server-line"></i>
+                <div class="job__info">
+                    <h5>Web & IT Infrastructure Management</h5>
+                    <p>Focus on hardware troubleshooting, network security protocols (CompTIA A+ standard), and frontend/backend web deployment.</p>
+                </div>
+            </div>
+
+            <div class="job">
+                <i class="ri-bank-card-line"></i>
+                <div class="job__info">
+                    <h5>Canadian Tax & Bookkeeping Foundations</h5>
+                    <p>Focus on your knowledge of CRA guidelines, personal/corporate tax structures, and cloud ledger management.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="career__awards" data-reveal="right">
+            <h3>Certificates</h3>
+            <div class="award">
+
+                <div>
+                    <i class="ri-medal-fill"></i>
+                    <div class="award__info">
+                        <h5>CompTIA A+</h5>
+                        <p>November 2026</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="award">
+
+                <div>
+                    <i class="ri-medal-fill"></i>
+                    <div class="award__info">
+                        <h5>Intuit QuickBooks Certification Level 1</h5>
+                        <p>July 2026</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="award">
+
+                <div>
+                    <i class="ri-medal-fill"></i>
+                    <div class="award__info">
+                        <h5>Bookkeeping Basics #1</h5>
+                        <p>July 2026</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="contact" class="contact" data-station="contact">
+        <div class="contact__grid">
+            <div class="contact__intro" data-reveal="left">
+                <h2>Have a project in mind? <em>Let's talk.</em></h2>
+                <p>I help small businesses automate their back office and keep their books CRA-ready.</p>
+            </div>
+
+            <dl class="contact__lines" data-reveal="right">
+                <div class="contact__line">
+                    <dt>Email</dt>
+                    <dd>
+                        <a href="mailto:yusuf_ali0906@hotmail.com">yusuf_ali0906@hotmail.com <i class="ri-arrow-right-up-line" aria-hidden="true"></i></a>
+                        <button type="button" class="contact__copy" data-copy="yusuf_ali0906@hotmail.com">Copy</button>
+                    </dd>
+                </div>
+                <div class="contact__line">
+                    <dt>Phone</dt>
+                    <dd>
+                        <a href="tel:+16474060209">+1 (647) 406-0209 <i class="ri-arrow-right-up-line" aria-hidden="true"></i></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__brand">
+    <a href="/">Yusuf Ali</a>
+    <p>© 2026 Yusuf Ali.</p>
+</div>
+
+<div class="footer__links">
+    <a href="/">Home</a>
+    <a href="/#about">About</a>
+    <a href="/#experience">Experience</a>
+    <a href="/projects">Projects</a>
+    <a href="/blog">Blog</a>
+</div>
+
+    </footer>
+
+
+
+        <button class="back-to-top" aria-label="Back to top">
+            <i class="ri-arrow-up-line"></i>
+        </button>
+
+        
+<script type="module" src="/static/js/three/main.js"></script>
+
+    </body>
+</html>
